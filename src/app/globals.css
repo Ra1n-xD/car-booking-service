@@ -1,17 +1,19 @@
+/* Reset css */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body,
 html {
-    margin: 0;
-    padding: 0;
     height: 100%;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Header */
 .logo {
     display: flex;
     align-items: center;
@@ -20,8 +22,10 @@ html {
 
 .navigation {
     display: flex;
+    /* flex-direction: row !important; */
+    justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .navigation a {
@@ -35,12 +39,22 @@ html {
     color: #0859ee;
 }
 
+/* Main css */
+.wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1 0 auto;
+}
+
+/* Footer css */
 footer {
     padding: 10px 0;
+    width: 100%;
     background-color: #f5f9fa;
     color: #000000;
     text-align: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
 }

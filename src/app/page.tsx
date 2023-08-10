@@ -1,7 +1,7 @@
 'use client';
-import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Home() {
@@ -75,8 +75,8 @@ export default function Home() {
                     {formik.touched.email && formik.errors.email && <div className="invalid-feedback">{formik.errors.email}</div>}
                 </div>
 
-                <div className="row mb-4">
-                    <div className="col-md-6">
+                <div className="row">
+                    <div className="col-md-6 mb-4">
                         <input
                             type="text"
                             className={`form-control ${formik.touched.driverLicense && formik.errors.driverLicense ? 'is-invalid' : ''}`}
@@ -85,7 +85,7 @@ export default function Home() {
                         />
                         {formik.touched.driverLicense && formik.errors.driverLicense && <div className="invalid-feedback">{formik.errors.driverLicense}</div>}
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-6 mb-4">
                         <select className={`form-select ${formik.touched.city && formik.errors.city ? 'is-invalid' : ''}`} {...formik.getFieldProps('city')}>
                             <option value="">Город</option>
                             <option value="city1">Город 1</option>
@@ -96,8 +96,8 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="row mb-4">
-                    <div className="col-md-6">
+                <div className="row">
+                    <div className="col-md-6 mb-4">
                         <select className={`form-select ${formik.touched.carBrand && formik.errors.carBrand ? 'is-invalid' : ''}`} {...formik.getFieldProps('carBrand')}>
                             <option value="">Марка автомобиля</option>
                             <option value="brand1">Марка 1</option>
@@ -106,7 +106,7 @@ export default function Home() {
                         </select>
                         {formik.touched.carBrand && formik.errors.carBrand && <div className="invalid-feedback">{formik.errors.carBrand}</div>}
                     </div>
-                    <div className="col-md-6 ">
+                    <div className="col-md-6 mb-4">
                         <select className={`form-select ${formik.touched.carModel && formik.errors.carModel ? 'is-invalid' : ''}`} {...formik.getFieldProps('carModel')}>
                             <option value="">Модель автомобиля</option>
                             {/* Добавьте модели в зависимости от выбора марки */}
