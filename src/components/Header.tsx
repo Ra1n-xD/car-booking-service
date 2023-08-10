@@ -1,22 +1,34 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import logo from '../app/logo.png';
+import { Navbar, Nav } from 'react-bootstrap';
 
-const Header = () => {
+import logo from '../../public/logo.png';
+
+function Header() {
     return (
-        <header className="">
-            <div className="d-flex justify-content-between">
-                <Image src={logo} width={55} height={55} alt="logo" />
-                <h1>Название Фирмы</h1>
-            </div>
-            <nav className="navigation">
-                <Link href="/">Оставить заявку</Link>
-                <Link href="/services">Сгенерированная заявка</Link>
-                <Link href="/about">Список заявок</Link>
-            </nav>
+        <header>
+            <Navbar bg="light" expand="md">
+                <div className="container col-lg-8 col-sm-12">
+                    <Navbar.Brand className="logo justify-content-end">
+                        <Image src={logo} width={55} height={55} alt="logo" />
+                        <h2>Абобус-Моторс </h2>
+                    </Navbar.Brand>
+
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+                        <Nav className="navigation">
+                            <Link href="/">Оставить заявку</Link>
+                            <Link href="/order">Список заявок</Link>
+                            <Link href="/ready">Ready</Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </div>
+            </Navbar>
         </header>
     );
-};
+}
 
 export default Header;

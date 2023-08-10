@@ -45,7 +45,7 @@ export default function Home() {
     });
 
     return (
-        <div className="container mt-5 col-6">
+        <div className="container mt-5 col-lg-6 col-sm-12">
             <h1 className="mb-4 text-center">Оставить заявку</h1>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-4">
@@ -116,8 +116,15 @@ export default function Home() {
                 </div>
 
                 <div className="mb-4 form-check">
-                    <input type="checkbox" className={`form-check-input ${formik.touched.agreement && formik.errors.agreement ? 'is-invalid' : ''}`} {...formik.getFieldProps('agreement')} />
-                    <label className="form-check-label">Согласие на обработку персональных данных</label>
+                    <input
+                        type="checkbox"
+                        className={`form-check-input ${formik.touched.agreement && formik.errors.agreement ? 'is-invalid' : ''}`}
+                        id="agreementCheckbox"
+                        {...formik.getFieldProps('agreement')}
+                    />
+                    <label className="form-check-label" htmlFor="agreementCheckbox">
+                        Согласие на обработку персональных данных
+                    </label>
                     {formik.touched.agreement && formik.errors.agreement && <div className="invalid-feedback">{formik.errors.agreement}</div>}
                 </div>
 
