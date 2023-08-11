@@ -1,34 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Веб-приложение "Бронирование автомобилей"
 
-## Getting Started
+Веб-приложение "Бронирование автомобилей" на базе Next.js. Это приложение предназначено для удобного бронирования автомобилей. Оно предоставляет возможность бронирования автомобилей и просмотра своих заявок.
 
-First, run the development server:
+## Оглавление
+- [Описание](#описание)
+- [Деплой](#Деплой)
+- [Установка](#установка)
+- [Запуск](#запуск)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Описание
+Приложение предоставляет следующие возможности:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Бронирование автомобиля:** Пользователи могут выбирать автомобиль из списка и бронировать его.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Управление бронированиями:** Зарегистрированные пользователи имеют возможность управлять своими бронированиями, просматривать и отменять их при необходимости.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Деплой
+Ознакомьтесь с рабочей версией приложения, перейдя по [ссылке](https://car-booking-service.vercel.app/).
 
-## Learn More
+## Установка
+Для запуска приложения локально на вашем компьютере выполните следующие шаги:
 
-To learn more about Next.js, take a look at the following resources:
+1. Сначала убедитесь, что у вас установлен Node.js. Если нет, вы можете скачать его с [официального сайта Node.js](https://nodejs.org/).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com/your-username/car-booking-app.git
+   ```
+3. Перейдите в директорию проекта:
+   ```bash
+   cd car-booking-app
+   ```
+4. Установите зависимости:
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Запуск
+1. После установки зависимостей, выполните команду:
+   ```bash
+   npm run dev
+   ```
+2. Откройте веб-браузер и перейдите по адресу `http://localhost:3000`, чтобы взаимодействовать с приложением.
