@@ -42,6 +42,17 @@ export default function Home() {
         }
     });
 
+    const handleDriverLicenseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let input = e.target.value.replace(/\D/g, '');
+
+        if (input.length <= 10) {
+            input = input.substr(0, 10);
+        }
+
+        const formattedInput = input.replace(/(\d{4})(\d{0,6})/, '$1 $2');
+        formik.setFieldValue('driverLicense', formattedInput);
+    };
+
     return (
         <div className="container mt-5 col-lg-6 col-sm-12">
             <h1 className="mb-4 text-center">Оставить заявку</h1>
@@ -80,6 +91,7 @@ export default function Home() {
                             className={`form-control ${formik.touched.driverLicense && formik.errors.driverLicense ? 'is-invalid' : ''}`}
                             placeholder="Водительское удостоверение"
                             {...formik.getFieldProps('driverLicense')}
+                            onChange={handleDriverLicenseChange}
                         />
                         {formik.touched.driverLicense && formik.errors.driverLicense && <div className="invalid-feedback">{formik.errors.driverLicense}</div>}
                     </div>
