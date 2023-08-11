@@ -44,8 +44,7 @@ export default function Home() {
 
     const handleDriverLicenseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let input = e.target.value.replace(/\D/g, '');
-
-        if (input.length <= 10) {
+        if (input.length > 10) {
             input = input.substr(0, 10);
         }
 
