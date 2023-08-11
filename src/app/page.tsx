@@ -2,8 +2,6 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 export default function Home() {
     const validationSchema = yup.object({
         lastName: yup
@@ -128,7 +126,7 @@ export default function Home() {
                     {formik.touched.agreement && formik.errors.agreement && <div className="invalid-feedback">{formik.errors.agreement}</div>}
                 </div>
 
-                <div className="mb-4 d-flex justify-content-between">
+                <div className="mb-4 d-flex offset justify-content-start">
                     <button type="submit" className="btn btn-primary">
                         Сохранить
                     </button>

@@ -5,6 +5,13 @@
     padding: 0;
 }
 
+p,
+h1,
+h2,
+h3 {
+    margin: 0;
+}
+
 body,
 html {
     height: 100%;
@@ -14,11 +21,6 @@ html {
 }
 
 /* Header */
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
 
 .navigation {
     display: flex;
@@ -40,6 +42,11 @@ html {
 }
 
 /* Main css */
+
+.offset {
+    gap: 10px;
+}
+
 .wrapper {
     min-height: 100%;
     display: flex;
@@ -52,7 +59,7 @@ html {
 
 /* Footer css */
 footer {
-    padding: 10px 0;
+    padding: 15px 0;
     width: 100%;
     background-color: #f5f9fa;
     color: #000000;

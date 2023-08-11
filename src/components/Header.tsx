@@ -10,8 +10,8 @@ function Header() {
         <header>
             <Navbar bg="light" expand="lg">
                 <div className="container col-lg-10 col-sm-12">
-                    <Navbar.Brand className="logo justify-content-end">
-                        <Image src={logo} width={55} height={55} alt="logo" />
+                    <Navbar.Brand className="offset d-flex align-items-center">
+                        <Image src={logo} width={60} height={60} alt="logo" />
                         <h2>Абобус-Моторс </h2>
                     </Navbar.Brand>
 

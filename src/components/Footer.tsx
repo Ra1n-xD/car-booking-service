@@ -1,7 +1,7 @@
 function Footer() {
     return (
         <footer>
-            <p>© {new Date().getFullYear()} Абобус-Авто. Все права защищены.</p>
+            <p>© {new Date().getFullYear()} Абобус-Моторс. Все права защищены.</p>
         </footer>
     );
 }
