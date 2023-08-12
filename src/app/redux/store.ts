@@ -1,10 +1,11 @@
 'use client';
 
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from './features/counter/counterSlice';
+import counter from './features/counter/counterSlice';
 
 export const store = configureStore({
-    reducer: { counter: counterReducer }
+    reducer: { counter },
+    devTools: process.env.NODE_ENV !== 'production'
 });
 
 export type RootState = ReturnType<typeof store.getState>;
