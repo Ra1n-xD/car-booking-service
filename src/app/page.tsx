@@ -2,7 +2,13 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement, incAmount } from './redux/features/counter/counterSlice';
+
 export default function Home() {
+    const count = useSelector((state) => state.counter.value);
+    const dispatch = useDispatch();
+
     const validationSchema = yup.object({
         lastName: yup
             .string()
@@ -141,9 +147,10 @@ export default function Home() {
                     <button type="submit" className="btn btn-primary">
                         Сохранить
                     </button>
-                    <button type="submit" className="btn btn-success">
-                        Отправить на регистрацию
+                    <button type="submit" className="btn btn-success" onClick={() => dispatch(incAmount(123))}>
+                        тест редукса
                     </button>
+                    <span>{count}</span>
                 </div>
             </form>
         </div>
