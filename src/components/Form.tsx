@@ -80,13 +80,14 @@ const Form = () => {
             onSubmit={(e) => {
                 e.preventDefault();
             }}
+            className="col-11 col-lg-8 col-xl-6"
         >
             <InputField field={formik.getFieldProps('lastName')} form={formik} placeholder="Фамилия" />
             <InputField field={formik.getFieldProps('firstName')} form={formik} placeholder="Имя" />
             <InputField field={formik.getFieldProps('middleName')} form={formik} placeholder="Отчество" />
             <InputField field={formik.getFieldProps('email')} form={formik} placeholder="Email" />
 
-            <div className="row">
+            <div className="row ">
                 <div className="col-md-6" onChange={handleDriverLicenseChange}>
                     <InputField field={formik.getFieldProps('driverLicense')} form={formik} placeholder="Водительское удостоверение" />
                 </div>
@@ -95,7 +96,7 @@ const Form = () => {
 
             <div className="row">
                 <SelectField field={formik.getFieldProps('carBrand')} form={formik} options={carBrandOptions} placeholder="Марка автомобиля" />
-                <SelectField field={formik.getFieldProps('city')} form={formik} options={carBrandOptions} placeholder="Модель автомобиля" />
+                <SelectField field={formik.getFieldProps('carModel')} form={formik} options={carBrandOptions} placeholder="Модель автомобиля" />
             </div>
 
             <CheckboxField field={formik.getFieldProps('agreement')} form={formik} label="Согласие на обработку персональных данных" />

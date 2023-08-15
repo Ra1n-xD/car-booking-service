@@ -15,6 +15,7 @@ const InputField: React.FC<InputFieldProps> = ({ field, form, placeholder }) => 
     return (
         <div className="mb-4">
             <input type="text" className={`form-control ${isError ? 'is-invalid' : ''}`} placeholder={placeholder} {...field} />
+
             {isError && <span className="invalid-feedback">{form.errors[field.name] as string}</span>}
         </div>
     );

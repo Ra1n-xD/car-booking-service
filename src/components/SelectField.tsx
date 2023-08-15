@@ -28,6 +28,7 @@ const SelectField: React.FC<SelectFieldProps> = ({ field, form, options, placeho
                     </option>
                 ))}
             </select>
+
             {isError && <span className="invalid-feedback">{form.errors[field.name] as string}</span>}
         </div>
     );

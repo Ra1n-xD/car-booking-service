@@ -18,6 +18,7 @@ const CheckboxField: React.FC<CheckboxFieldProps> = ({ field, form, label }) => 
             <label className="form-check-label" htmlFor={field.name}>
                 {label}
             </label>
+
             {isError && <span className="invalid-feedback">{form.errors[field.name] as string}</span>}
         </div>
     );

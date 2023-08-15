@@ -10,26 +10,24 @@ const Orders = () => {
     ];
 
     return (
-        <div className="mt-5 text-center">
-            <h2>Список заявок</h2>
-            <p className="mb-3">Ваши заявки на покупку автомобилей</p>
+        <div className="mt-5 d-flex flex-column align-items-center">
+            <h1 className="mb-1 text-center">Список заявок</h1>
+            <p className="mb-3 text-center">Ваши заявки на покупку автомобилей</p>
 
-            <div className="d-flex flex-column align-items-center">
-                {userRequests.map((request) => (
-                    <div key={request.id} className="mt-4 offset d-flex flex-row">
-                        <FaArchive size={45} color="#0080ff" />
-                        <div className="d-flex flex-column align-items-start">
-                            <strong>
-                                <p className="">
-                                    Заявка №{request.id}: {request.car}
-                                </p>
-                            </strong>
-                            <p className="text-muted">Автомобиль : {request.status}</p>
-                            <p className="text-muted">Дата заявки: {request.date}</p>
-                        </div>
+            {userRequests.map((request) => (
+                <div key={request.id} className="mt-4 offset d-flex flex-row">
+                    <FaArchive size={45} color="#0080ff" />
+                    <div className="d-flex flex-column align-items-start">
+                        <strong>
+                            <p className="">
+                                Заявка №{request.id}: {request.car}
+                            </p>
+                        </strong>
+                        <p className="text-muted">Автомобиль : {request.status}</p>
+                        <p className="text-muted">Дата заявки: {request.date}</p>
                     </div>
-                ))}
-            </div>
+                </div>
+            ))}
 
             <Link href="/">
                 <Button variant="primary" className="mt-4">
