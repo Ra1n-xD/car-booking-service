@@ -15,6 +15,7 @@ h3 {
 body,
 html {
     height: 100%;
+    margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -28,6 +29,7 @@ html {
 /* Header */
 header {
     position: relative;
+    background-color: #f5f9fa;
 }
 
 .bottom-bar {
@@ -40,6 +42,7 @@ header {
 }
 
 .navigation {
+    display: flex;
     align-items: center;
     gap: 20px;
 }
@@ -47,12 +50,18 @@ header {
 .navigation a {
     color: #333;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 400;
     transition: color 0.3s;
 }
 
 .navigation a:hover {
     color: #0859ee;
+}
+
+.show .separator {
+    height: 1px;
+    background-color: #c4c3c3;
+    width: 100%;
 }
 
 /* Main css */
@@ -69,7 +78,7 @@ header {
 /* Footer css */
 footer {
     position: relative;
-    padding: 15px 0;
+    padding: 20px 0;
     width: 100%;
     background-color: #f5f9fa;
     color: #000000;

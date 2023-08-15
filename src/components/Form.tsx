@@ -2,8 +2,8 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import type { RootState } from '@/app/redux/store';
 import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '@/app/redux/store';
 import { increment, decrement, incAmount } from '@/app/redux/features/counter/counterSlice';
 
 import InputField from '../components/InputField';
@@ -92,6 +92,7 @@ const Form = () => {
                 </div>
                 <SelectField field={formik.getFieldProps('city')} form={formik} options={cityOptions} placeholder="Город" />
             </div>
+
             <div className="row">
                 <SelectField field={formik.getFieldProps('carBrand')} form={formik} options={carBrandOptions} placeholder="Марка автомобиля" />
                 <SelectField field={formik.getFieldProps('city')} form={formik} options={carBrandOptions} placeholder="Модель автомобиля" />
