@@ -26,6 +26,7 @@ function Header() {
                     </Navbar.Collapse>
                 </div>
             </Navbar>
+            <div className="bottom-bar"></div>
         </header>
     );
 }
