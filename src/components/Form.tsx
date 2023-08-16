@@ -9,6 +9,7 @@ import { increment, decrement, incAmount } from '@/app/redux/features/counter/co
 import InputField from '../components/InputField';
 import SelectField from '../components/SelectField';
 import CheckboxField from '../components/CheckboxField';
+import Link from 'next/link';
 
 const Form = () => {
     const count = useSelector((state: RootState) => state.counter.value);
@@ -102,11 +103,13 @@ const Form = () => {
             <CheckboxField field={formik.getFieldProps('agreement')} form={formik} label="Согласие на обработку персональных данных" />
 
             <div className="mb-4 d-flex offset justify-content-start">
-                <button type="submit" className="btn btn-primary">
-                    Сохранить
-                </button>
+                <Link href="/orders/id">
+                    <button type="submit" className="btn btn-primary">
+                        Сохранить
+                    </button>
+                </Link>
                 <button type="submit" className="btn btn-success" onClick={() => dispatch(incAmount(123))}>
-                    тест редукса
+                    Отправить заявку
                 </button>
                 <span>{count}</span>
             </div>

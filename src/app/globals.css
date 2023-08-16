@@ -47,14 +47,14 @@ header {
     gap: 20px;
 }
 
-.navigation a {
+.navigation-item {
     color: #333;
     text-decoration: none;
     font-weight: 400;
     transition: color 0.3s;
 }
 
-.navigation a:hover {
+.navigation-item:hover {
     color: #0859ee;
 }
 

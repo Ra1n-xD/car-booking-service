@@ -15,14 +15,15 @@ const Orders = () => {
             <p className="mb-3 text-center">Ваши заявки на покупку автомобилей</p>
 
             {userRequests.map((request) => (
-                <div key={request.id} className="mt-4 offset d-flex flex-row">
+                <div key={request.id} className="mt-4 offset d-flex colum">
                     <FaArchive size={45} color="#0080ff" />
                     <div className="d-flex flex-column align-items-start">
-                        <strong>
-                            <p className="">
+                        <Link href={`/orders/${request.id}`} className="navigation-item">
+                            <strong>
                                 Заявка №{request.id}: {request.car}
-                            </p>
-                        </strong>
+                            </strong>
+                        </Link>
+
                         <p className="text-muted">Автомобиль : {request.status}</p>
                         <p className="text-muted">Дата заявки: {request.date}</p>
                     </div>
