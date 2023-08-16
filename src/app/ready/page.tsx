@@ -11,9 +11,9 @@ const Ready = () => {
 
     return (
         <div className="mt-5 text-center">
-            <div className="d-flex justify-content-center align-items-center offset">
+            <div className="mb-3 d-flex justify-content-center align-items-center offset">
                 <FaCheckCircle size={50} color="#0080ff" />
-                <h2 className="">Ваша заявка готова!</h2>
+                <h2>Ваша заявка готова!</h2>
             </div>
 
             <p className="lead mt-2">Автомобиль: {generatedRequest.car}</p>

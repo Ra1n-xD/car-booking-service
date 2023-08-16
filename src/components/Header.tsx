@@ -1,9 +1,9 @@
-import OffcanvasExample from './Navbar';
+import Navbar from './Navbar';
 
 function Header() {
     return (
         <header>
-            <OffcanvasExample />
+            <Navbar />
             <div className="bottom-bar"></div>
         </header>
     );

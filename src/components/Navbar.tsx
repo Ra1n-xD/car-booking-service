@@ -5,7 +5,7 @@ import { Navbar as NavbarBS, Offcanvas, Nav, Button } from 'react-bootstrap';
 
 import logo from '../../public/logo.png';
 
-const OffcanvasExample = () => {
+const Navbar = () => {
     return (
         <>
             <NavbarBS expand="lg" className="container col-11 col-lg-10">
@@ -41,4 +41,4 @@ const OffcanvasExample = () => {
     );
 };
 
-export default OffcanvasExample;
+export default Navbar;
