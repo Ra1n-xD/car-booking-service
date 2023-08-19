@@ -1,4 +1,5 @@
 'use client';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Navbar as NavbarBS, Offcanvas, Nav, Button } from 'react-bootstrap';
@@ -6,6 +7,12 @@ import { Navbar as NavbarBS, Offcanvas, Nav, Button } from 'react-bootstrap';
 import logo from '../../public/logo.png';
 
 const Navbar = () => {
+    const [showMenu, setShowMenu] = useState(false);
+
+    const handleMenuToggle = () => {
+        setShowMenu(!showMenu);
+    };
+
     return (
         <>
             <NavbarBS expand="lg" className="container col-11 col-lg-9">
@@ -15,13 +22,13 @@ const Navbar = () => {
 
                         <div className="d-flex flex-column">
                             <p className="display-6">Абобус-Моторс </p>
-                            <span className="lead d-none d-lg-block">Бронирование авто </span>
+                            <span className="lead d-none d-lg-block">Бронирование авто</span>
                         </div>
                     </NavbarBS.Brand>
                 </Link>
 
-                <NavbarBS.Toggle aria-controls="basic-NavbarBS-nav" />
-                <NavbarBS.Offcanvas id="basic-NavbarBS-nav">
+                <NavbarBS.Toggle aria-controls="basic-NavbarBS-nav" onClick={handleMenuToggle} />
+                <NavbarBS.Offcanvas id="basic-NavbarBS-nav" show={showMenu} onHide={() => setShowMenu(false)}>
                     <Offcanvas.Header closeButton>
                         <Offcanvas.Title id="basic-NavbarBS-nav">Меню</Offcanvas.Title>
                     </Offcanvas.Header>
@@ -29,13 +36,15 @@ const Navbar = () => {
 
                     <Offcanvas.Body>
                         <Nav className="navigation justify-content-end flex-grow-1">
-                            <Link href="/" className="navigation-item">
+                            <Link href="/" className="navigation-item" onClick={handleMenuToggle}>
                                 Оставить заявку
                             </Link>
-                            <Link href="/orders" className="navigation-item">
+                            <Link href="/orders" className="navigation-item" onClick={handleMenuToggle}>
                                 Мои заявки
                             </Link>
-                            <Button variant="primary">Авторизация</Button>
+                            <Button variant="primary" onClick={handleMenuToggle}>
+                                Авторизация
+                            </Button>
                         </Nav>
                     </Offcanvas.Body>
                 </NavbarBS.Offcanvas>
