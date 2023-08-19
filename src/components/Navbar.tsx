@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Navbar as NavbarBS, Offcanvas, Nav, Button } from 'react-bootstrap';
@@ -11,6 +11,10 @@ const Navbar = () => {
 
     const handleMenuToggle = () => {
         setShowMenu(!showMenu);
+    };
+
+    const handleMenuClose = () => {
+        setShowMenu(false);
     };
 
     return (
@@ -28,7 +32,7 @@ const Navbar = () => {
                 </Link>
 
                 <NavbarBS.Toggle aria-controls="basic-NavbarBS-nav" onClick={handleMenuToggle} />
-                <NavbarBS.Offcanvas id="basic-NavbarBS-nav" show={showMenu} onHide={() => setShowMenu(false)}>
+                <NavbarBS.Offcanvas id="basic-NavbarBS-nav" show={showMenu} onHide={handleMenuClose}>
                     <Offcanvas.Header closeButton>
                         <Offcanvas.Title id="basic-NavbarBS-nav">Меню</Offcanvas.Title>
                     </Offcanvas.Header>
@@ -36,13 +40,13 @@ const Navbar = () => {
 
                     <Offcanvas.Body>
                         <Nav className="navigation justify-content-end flex-grow-1">
-                            <Link href="/" className="navigation-item" onClick={handleMenuToggle}>
+                            <Link href="/" className="navigation-item" onClick={handleMenuClose}>
                                 Оставить заявку
                             </Link>
-                            <Link href="/orders" className="navigation-item" onClick={handleMenuToggle}>
+                            <Link href="/orders" className="navigation-item" onClick={handleMenuClose}>
                                 Мои заявки
                             </Link>
-                            <Button variant="primary" onClick={handleMenuToggle}>
+                            <Button variant="primary" onClick={handleMenuClose}>
                                 Авторизация
                             </Button>
                         </Nav>
