@@ -21,11 +21,6 @@ html {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom UI */
-.offset {
-    gap: 10px;
-}
-
 /* Header */
 header {
     position: relative;
@@ -73,6 +68,17 @@ header {
 
 .container {
     flex: 1 0 auto;
+}
+
+.offset {
+    gap: 10px;
+}
+
+.loading-container {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 /* Footer css */

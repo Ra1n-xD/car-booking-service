@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { Providers } from './redux/provider';
+
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 import './globals.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const metadata: Metadata = {
-    title: 'Абоба-Моторс',
+    title: 'Абобус-Моторс',
     description: 'Бронирование автомобилей'
 };
 
