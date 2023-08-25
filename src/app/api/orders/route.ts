@@ -1,4 +1,4 @@
-import Auto from '@/models/Auto';
+import Auto from '@/models/City';
 import connect from '@/utils/db';
 import { NextResponse } from 'next/server';
 
