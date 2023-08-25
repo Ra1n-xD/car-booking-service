@@ -46,9 +46,11 @@ const Navbar = () => {
                             <Link href="/orders" className="navigation-item" onClick={handleMenuClose}>
                                 Мои заявки
                             </Link>
-                            <Button variant="primary" onClick={handleMenuClose}>
-                                Авторизация
-                            </Button>
+                            <Link href="/login" className="navigation-item" onClick={handleMenuClose}>
+                                <Button variant="primary" onClick={handleMenuClose}>
+                                    Авторизация
+                                </Button>
+                            </Link>
                         </Nav>
                     </Offcanvas.Body>
                 </NavbarBS.Offcanvas>
