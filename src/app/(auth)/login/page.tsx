@@ -20,9 +20,9 @@ const Login = () => {
 
     return (
         <div className="container mt-5 d-flex flex-column align-items-center justify-content-center">
-            <h2 className="mb-3">Авторизация</h2>
+            <h2 className="mb-4">Авторизация</h2>
 
-            <form onSubmit={handleSubmit} className="col-6">
+            <form onSubmit={handleSubmit} className="col-4">
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">
                         Email
@@ -40,7 +40,9 @@ const Login = () => {
                 </button>
             </form>
 
-            <button type="button" className="btn btn-outline-primary mt-3 col-6" onClick={() => signIn('google')}>
+            <span className="mt-3 lead"> - ИЛИ - </span>
+
+            <button type="button" className="btn btn-outline-primary mt-3 col-4" onClick={() => signIn('google')}>
                 Авторизоваться через Google
             </button>
         </div>
