@@ -22,6 +22,8 @@ interface City {
 }
 
 const Form = ({ autos, cities }: { autos: Auto[]; cities: City[] }) => {
+    console.log(autos);
+
     const validationSchema = yup.object({
         lastName: yup
             .string()
