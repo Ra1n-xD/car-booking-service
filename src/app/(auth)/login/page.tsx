@@ -22,7 +22,7 @@ const Login = () => {
         <div className="container mt-5 d-flex flex-column align-items-center justify-content-center">
             <h2 className="mb-4">Авторизация</h2>
 
-            <form onSubmit={handleSubmit} className="col-4">
+            <form onSubmit={handleSubmit} className="col-8 col-lg-4">
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">
                         Email
@@ -42,7 +42,7 @@ const Login = () => {
 
             <span className="mt-3 lead"> - ИЛИ - </span>
 
-            <button type="button" className="btn btn-outline-primary mt-3 col-4" onClick={() => signIn('google')}>
+            <button type="button" className="btn btn-outline-primary mt-3 col-8 col-lg-4" onClick={() => signIn('google')}>
                 Авторизоваться через Google
             </button>
         </div>

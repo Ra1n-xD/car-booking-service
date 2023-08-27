@@ -1,14 +1,14 @@
-// import Auto from '@/models/City';
+import User from '@/models/User';
 import connect from '@/utils/db';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
     try {
         await connect();
-        // const autos = await Auto.find();
+        const users = await User.find();
 
-        return NextResponse.json({ user: 123 }, { status: 200 });
+        return new NextResponse(JSON.stringify(users), { status: 200 });
     } catch (error) {
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        return new NextResponse('Internal Server Error', { status: 500 });
     }
 }

@@ -1,30 +1,26 @@
 import { FieldProps, FormikErrors, FormikTouched } from 'formik';
 
-interface Option {
-    value: string;
-    label: string;
-}
-
-interface SelectFieldProps {
+interface SelectCitiesProps {
     field: FieldProps['field'];
     form: {
         touched: FormikTouched<any>;
         errors: FormikErrors<any>;
     };
-    options: Option[];
-    placeholder: string;
+    cities: any[];
 }
 
-const SelectField: React.FC<SelectFieldProps> = ({ field, form, options, placeholder }) => {
+const SelectCities: React.FC<SelectCitiesProps> = ({ field, form, cities }) => {
     const isError = form.touched[field.name] && form.errors[field.name];
 
     return (
         <div className="col-md-6 mb-4">
             <select className={`form-select ${isError ? 'is-invalid' : ''}`} {...field}>
-                <option value="">{placeholder}</option>
-                {options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                        {option.label}
+                <option value="" disabled>
+                    Город
+                </option>
+                {cities.map((city) => (
+                    <option key={city._id} value={city.code}>
+                        {city.name}
                     </option>
                 ))}
             </select>
@@ -34,4 +30,4 @@ const SelectField: React.FC<SelectFieldProps> = ({ field, form, options, placeho
     );
 };
 
-export default SelectField;
+export default SelectCities;

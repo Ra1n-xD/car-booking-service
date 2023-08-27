@@ -1,20 +1,27 @@
 'use client';
+import Link from 'next/link';
+
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { useSelector, useDispatch } from 'react-redux';
-import type { RootState } from '@/app/redux/store';
-import { increment, decrement, incAmount } from '@/app/redux/features/counter/counterSlice';
+import InputField from './InputField';
+import SelectCities from './SelectCities';
+import CheckboxField from './CheckboxField';
+import SelectAutos from './SelectAutos';
 
-import InputField from '../components/InputField';
-import SelectField from '../components/SelectField';
-import CheckboxField from '../components/CheckboxField';
-import Link from 'next/link';
+interface Auto {
+    _id: string;
+    brand: string;
+    models: object[];
+}
 
-const Form = () => {
-    const count = useSelector((state: RootState) => state.counter.value);
-    const dispatch = useDispatch();
+interface City {
+    _id: string;
+    code: string;
+    name: string;
+}
 
+const Form = ({ autos, cities }: { autos: Auto[]; cities: City[] }) => {
     const validationSchema = yup.object({
         lastName: yup
             .string()
@@ -64,54 +71,39 @@ const Form = () => {
         formik.setFieldValue('driverLicense', formattedInput);
     };
 
-    const cityOptions = [
-        { value: 'city1', label: 'Город 1' },
-        { value: 'city2', label: 'Город 2' }
-        // ...
-    ];
-
-    const carBrandOptions = [
-        { value: 'brand1', label: 'Марка 1' },
-        { value: 'brand2', label: 'Марка 2' }
-        // ...
-    ];
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        formik.handleSubmit();
+    };
 
     return (
-        <form
-            onSubmit={(e) => {
-                e.preventDefault();
-            }}
-            className="col-11 col-lg-8 col-xl-6"
-        >
+        <form onSubmit={handleSubmit} className="col-11 col-lg-8 col-xl-6">
             <InputField field={formik.getFieldProps('lastName')} form={formik} placeholder="Фамилия" />
             <InputField field={formik.getFieldProps('firstName')} form={formik} placeholder="Имя" />
             <InputField field={formik.getFieldProps('middleName')} form={formik} placeholder="Отчество" />
             <InputField field={formik.getFieldProps('email')} form={formik} placeholder="Email" />
 
-            <div className="row ">
+            <div className="row">
                 <div className="col-md-6" onChange={handleDriverLicenseChange}>
                     <InputField field={formik.getFieldProps('driverLicense')} form={formik} placeholder="Водительское удостоверение" />
                 </div>
-                <SelectField field={formik.getFieldProps('city')} form={formik} options={cityOptions} placeholder="Город" />
+                <SelectCities field={formik.getFieldProps('city')} form={formik} cities={cities} />
             </div>
 
             <div className="row">
-                <SelectField field={formik.getFieldProps('carBrand')} form={formik} options={carBrandOptions} placeholder="Марка автомобиля" />
-                <SelectField field={formik.getFieldProps('carModel')} form={formik} options={carBrandOptions} placeholder="Модель автомобиля" />
+                <SelectAutos fieldBrand={formik.getFieldProps('carBrand')} fieldModel={formik.getFieldProps('carModel')} form={formik} autos={autos} />
             </div>
 
             <CheckboxField field={formik.getFieldProps('agreement')} form={formik} label="Согласие на обработку персональных данных" />
 
             <div className="mb-4 d-flex offset justify-content-start">
-                <Link href="/orders/id">
-                    <button type="submit" className="btn btn-primary">
-                        Сохранить
-                    </button>
-                </Link>
-                <button type="submit" className="btn btn-success" onClick={() => dispatch(incAmount(123))}>
+                <button type="submit" className="btn btn-primary">
+                    Сохранить
+                </button>
+                <Link href="/orders/id"> заказом</Link>
+                <button type="submit" className="btn btn-success">
                     Отправить заявку
                 </button>
-                <span>{count}</span>
             </div>
         </form>
     );
