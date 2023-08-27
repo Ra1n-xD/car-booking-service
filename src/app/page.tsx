@@ -1,7 +1,7 @@
 import Form from '../components/Form';
 
 async function getAutos() {
-    const autos = await fetch(`${process.env.URL_API}/api/autos`);
+    const autos = await fetch(`${process.env.URL_API}/api/autos`, { cache: 'no-store' });
 
     if (!autos.ok) {
         throw new Error('Failed to fetch data');
@@ -11,7 +11,7 @@ async function getAutos() {
 }
 
 async function getCities() {
-    const cities = await fetch(`${process.env.URL_API}/api/cities`);
+    const cities = await fetch(`${process.env.URL_API}/api/cities`, { cache: 'no-store' });
 
     if (!cities.ok) {
         throw new Error('Failed to fetch data');
