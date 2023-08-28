@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -22,7 +23,8 @@ interface City {
 }
 
 const Form = ({ autos, cities }: { autos: Auto[]; cities: City[] }) => {
-    console.log(autos);
+    const session = useSession();
+    // console.log(autos);
 
     const validationSchema = yup.object({
         lastName: yup
@@ -98,15 +100,19 @@ const Form = ({ autos, cities }: { autos: Auto[]; cities: City[] }) => {
 
             <CheckboxField field={formik.getFieldProps('agreement')} form={formik} label="Согласие на обработку персональных данных" />
 
-            <div className="mb-4 d-flex offset justify-content-start">
-                <button type="submit" className="btn btn-primary">
-                    Сохранить
-                </button>
-                <Link href="/orders/id"> заказом</Link>
-                <button type="submit" className="btn btn-success">
-                    Отправить заявку
-                </button>
-            </div>
+            {session.status === 'authenticated' ? (
+                <div className="mb-4 d-flex offset justify-content-start">
+                    <button type="submit" className="btn btn-primary">
+                        Сохранить
+                    </button>
+                    <button type="submit" className="btn btn-success">
+                        Отправить заявку
+                    </button>
+                    <Link href="/orders/id">имитация отправки</Link>
+                </div>
+            ) : (
+                <div className="mb-4 text-danger text-center h6">Чтобы оставить заявку необходимо быть авторизованным</div>
+            )}
         </form>
     );
 };

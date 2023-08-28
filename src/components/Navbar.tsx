@@ -1,12 +1,16 @@
 'use client';
 import { useState } from 'react';
+import { Navbar as NavbarBS, Offcanvas, Nav, Button } from 'react-bootstrap';
+
 import Link from 'next/link';
 import Image from 'next/image';
-import { Navbar as NavbarBS, Offcanvas, Nav, Button } from 'react-bootstrap';
+import { signOut, useSession } from 'next-auth/react';
 
 import logo from '../../public/logo.png';
 
 const Navbar = () => {
+    const session = useSession();
+
     const [showMenu, setShowMenu] = useState(false);
 
     const handleMenuToggle = () => {
@@ -14,6 +18,13 @@ const Navbar = () => {
     };
 
     const handleMenuClose = () => {
+        setShowMenu(false);
+    };
+
+    const handleAuth = () => {
+        if (session.status === 'authenticated') {
+            signOut();
+        }
         setShowMenu(false);
     };
 
@@ -40,16 +51,20 @@ const Navbar = () => {
 
                     <Offcanvas.Body>
                         <Nav className="navigation justify-content-end flex-grow-1">
-                            <Link href="/" className="navigation-item" onClick={handleMenuClose}>
-                                Оставить заявку
-                            </Link>
-                            <Link href="/orders" className="navigation-item" onClick={handleMenuClose}>
-                                Мои заявки
-                            </Link>
-                            <Link href="/login" className="navigation-item" onClick={handleMenuClose}>
-                                <Button variant="primary" onClick={handleMenuClose}>
-                                    Авторизация
-                                </Button>
+                            {session.status === 'authenticated' && (
+                                <Link href="/" className="navigation-item" onClick={handleMenuClose}>
+                                    Оставить заявку
+                                </Link>
+                            )}
+
+                            {session.status === 'authenticated' && (
+                                <Link href="/orders" className="navigation-item" onClick={handleMenuClose}>
+                                    Мои заявки
+                                </Link>
+                            )}
+
+                            <Link href={session.status === 'authenticated' ? '/' : '/login'} className="navigation-item" onClick={handleAuth}>
+                                <Button variant="outline-primary">{session.status === 'authenticated' ? 'Выйти' : 'Войти'}</Button>
                             </Link>
                         </Nav>
                     </Offcanvas.Body>

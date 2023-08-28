@@ -2,7 +2,8 @@ import Form from '../components/Form';
 
 async function getAutos() {
     const autos = await fetch(`${process.env.URL_API}/api/autos`, {
-        next: { revalidate: 10 }
+        next: { revalidate: 60 },
+        cache: 'no-cache'
     });
 
     if (!autos.ok) {
@@ -14,7 +15,8 @@ async function getAutos() {
 
 async function getCities() {
     const cities = await fetch(`${process.env.URL_API}/api/cities`, {
-        next: { revalidate: 10 }
+        next: { revalidate: 60 },
+        cache: 'no-cache'
     });
 
     if (!cities.ok) {

@@ -7,8 +7,8 @@ export async function GET(request: Request) {
         await connect();
         const users = await User.find();
 
-        return new NextResponse(JSON.stringify(users), { status: 200 });
+        return NextResponse.json(users, { status: 200 });
     } catch (error) {
-        return new NextResponse('Internal Server Error', { status: 500 });
+        return NextResponse.json('Internal Server Error', { status: 500 });
     }
 }

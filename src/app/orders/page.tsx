@@ -1,13 +1,30 @@
 'use client';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+
 import { FaCheckCircle, FaArchive } from 'react-icons/fa';
 import { Button } from 'react-bootstrap';
-import Link from 'next/link';
+
+import Loading from '@/components/Loading';
 
 const Orders = () => {
     const userRequests = [
         { id: 1, car: 'Марка и модель авто 1', status: 'Успех', date: '2023-08-10' },
         { id: 2, car: 'Марка и модель авто 2', status: 'Успех', date: '2023-08-09' }
     ];
+
+    const session = useSession();
+    console.log(session);
+    const router = useRouter();
+
+    if (session.status === 'loading') {
+        return <Loading />;
+    }
+
+    if (session.status === 'unauthenticated') {
+        router.push('/login');
+    }
 
     return (
         <div className="mt-5 d-flex flex-column align-items-center">
