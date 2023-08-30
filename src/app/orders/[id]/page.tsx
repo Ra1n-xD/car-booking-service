@@ -1,9 +1,22 @@
-'use client';
 import { FaCheckCircle } from 'react-icons/fa';
-import { Button } from 'react-bootstrap';
+import { format } from 'date-fns';
+
 import Link from 'next/link';
 
-const Ready = ({ params }: { params: { id: string } }) => {
+async function getOrder(id: string) {
+    const orders = await fetch(`http://localhost:3000/api/orders/${id}`, { method: 'GET' });
+
+    if (!orders.ok) {
+        throw new Error('Failed to fetch data');
+    }
+
+    return orders.json();
+}
+
+const OrderPage = async ({ params }: { params: { id: string } }) => {
+    const order = await getOrder(params.id);
+    console.log(order);
+
     const generatedRequest = {
         car: 'Марка и модель автомобиля',
         date: new Date().getFullYear()
@@ -16,24 +29,26 @@ const Ready = ({ params }: { params: { id: string } }) => {
                 <h2>Ваша заявка #{params.id} готова!</h2>
             </div>
 
-            <p className="lead mt-2 text-center">Автомобиль: {generatedRequest.car}</p>
-            <p className="lead mt-2 text-center">Дата заявки: {generatedRequest.date}</p>
+            <p className="lead mt-2 text-center">
+                Автомобиль: {order.auto.brand} {order.auto.model.name}
+            </p>
+            <p className="lead mt-2 text-center">Дата заявки: {format(new Date(order.createDate), 'dd.MM.yyyy')}</p>
 
             <div className="mb-4 d-flex offset justify-content-center">
                 <Link href="/orders">
-                    <Button variant="primary" className="mt-4">
+                    <button type="submit" className="mt-4 btn btn-primary">
                         К списку заявок
-                    </Button>
+                    </button>
                 </Link>
 
                 <Link href={`/orders/${params.id}/update`}>
-                    <Button variant="success" className="mt-4">
+                    <button type="submit" className="mt-4 btn btn-success">
                         Редактировать заявку
-                    </Button>
+                    </button>
                 </Link>
             </div>
         </div>
     );
 };
 
-export default Ready;
+export default OrderPage;

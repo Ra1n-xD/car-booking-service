@@ -7,14 +7,15 @@ interface SelectCitiesProps {
         errors: FormikErrors<any>;
     };
     cities: any[];
+    isEdited: boolean;
 }
 
-const SelectCities: React.FC<SelectCitiesProps> = ({ field, form, cities }) => {
+const SelectCities: React.FC<SelectCitiesProps> = ({ field, form, cities, isEdited }) => {
     const isError = form.touched[field.name] && form.errors[field.name];
 
     return (
         <div className="col-md-6 mb-4">
-            <select className={`form-select ${isError ? 'is-invalid' : ''}`} {...field}>
+            <select className={`form-select ${isError ? 'is-invalid' : ''}`} {...field} disabled={isEdited}>
                 <option value="" disabled>
                     Город
                 </option>

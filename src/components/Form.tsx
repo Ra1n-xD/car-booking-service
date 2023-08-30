@@ -24,6 +24,7 @@ interface City {
 
 const Form = ({ autos, cities }: { autos: Auto[]; cities: City[] }) => {
     const session = useSession();
+    const authorized = session.status === 'authenticated' ? true : false;
     // console.log(autos);
 
     const validationSchema = yup.object({
@@ -82,25 +83,25 @@ const Form = ({ autos, cities }: { autos: Auto[]; cities: City[] }) => {
 
     return (
         <form onSubmit={handleSubmit} className="col-11 col-lg-8 col-xl-6">
-            <InputField field={formik.getFieldProps('lastName')} form={formik} placeholder="Фамилия" />
-            <InputField field={formik.getFieldProps('firstName')} form={formik} placeholder="Имя" />
-            <InputField field={formik.getFieldProps('middleName')} form={formik} placeholder="Отчество" />
-            <InputField field={formik.getFieldProps('email')} form={formik} placeholder="Email" />
+            <InputField field={formik.getFieldProps('lastName')} form={formik} placeholder="Фамилия" isEdited={!authorized} />
+            <InputField field={formik.getFieldProps('firstName')} form={formik} placeholder="Имя" isEdited={!authorized} />
+            <InputField field={formik.getFieldProps('middleName')} form={formik} placeholder="Отчество" isEdited={!authorized} />
+            <InputField field={formik.getFieldProps('email')} form={formik} placeholder="Email" isEdited={!authorized} />
 
             <div className="row">
                 <div className="col-md-6" onChange={handleDriverLicenseChange}>
-                    <InputField field={formik.getFieldProps('driverLicense')} form={formik} placeholder="Водительское удостоверение" />
+                    <InputField field={formik.getFieldProps('driverLicense')} form={formik} placeholder="Водительское удостоверение" isEdited={!authorized} />
                 </div>
-                <SelectCities field={formik.getFieldProps('city')} form={formik} cities={cities} />
+                <SelectCities field={formik.getFieldProps('city')} form={formik} cities={cities} isEdited={!authorized} />
             </div>
 
             <div className="row">
-                <SelectAutos fieldBrand={formik.getFieldProps('carBrand')} fieldModel={formik.getFieldProps('carModel')} form={formik} autos={autos} />
+                <SelectAutos fieldBrand={formik.getFieldProps('carBrand')} fieldModel={formik.getFieldProps('carModel')} form={formik} autos={autos} isEdited={!authorized} />
             </div>
 
-            <CheckboxField field={formik.getFieldProps('agreement')} form={formik} label="Согласие на обработку персональных данных" />
+            <CheckboxField field={formik.getFieldProps('agreement')} form={formik} label="Согласие на обработку персональных данных" isEdited={!authorized} />
 
-            {session.status === 'authenticated' ? (
+            {authorized ? (
                 <div className="mb-4 d-flex offset justify-content-start">
                     <button type="submit" className="btn btn-primary">
                         Сохранить
