@@ -1,7 +1,7 @@
 import Form from '../components/Form';
 
 async function getAutos() {
-    const autos = await fetch(`${process.env.URL_API}/api/autos`, {
+    const autos = await fetch(`${process.env.NEXTAUTH_URL}/api/autos`, {
         next: { revalidate: 60 }
     });
 
@@ -13,7 +13,7 @@ async function getAutos() {
 }
 
 async function getCities() {
-    const cities = await fetch(`${process.env.URL_API}/api/cities`, {
+    const cities = await fetch(`${process.env.NEXTAUTH_URL}/api/cities`, {
         next: { revalidate: 60 }
     });
 

@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import Link from 'next/link';
 
 async function getOrder(id: string) {
-    const orders = await fetch(`http://localhost:3000/api/orders/${id}`, { method: 'GET' });
+    const orders = await fetch(`${process.env.NEXTAUTH_URL}/api/orders/${id}`, { next: { revalidate: 60 } });
 
     if (!orders.ok) {
         throw new Error('Failed to fetch data');
@@ -16,11 +16,6 @@ async function getOrder(id: string) {
 const OrderPage = async ({ params }: { params: { id: string } }) => {
     const order = await getOrder(params.id);
     console.log(order);
-
-    const generatedRequest = {
-        car: 'Марка и модель автомобиля',
-        date: new Date().getFullYear()
-    };
 
     return (
         <div className="mt-5">
