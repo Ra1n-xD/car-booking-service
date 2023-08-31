@@ -22,7 +22,12 @@ interface City {
     name: string;
 }
 
-const Form = ({ autos, cities }: { autos: Auto[]; cities: City[] }) => {
+interface FormProps {
+    autos: Auto[];
+    cities: City[];
+}
+
+const Form = ({ autos, cities }: FormProps) => {
     const session = useSession();
     const authorized = session.status === 'authenticated' ? true : false;
     // console.log(autos);
@@ -78,7 +83,9 @@ const Form = ({ autos, cities }: { autos: Auto[]; cities: City[] }) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        formik.handleSubmit();
+        const { carBrand, carModel, city, driverLicense, email, firstName, lastName, middleName } = formik.values;
+
+        console.log(carBrand, carModel, city, driverLicense, email, firstName, lastName, middleName);
     };
 
     return (
