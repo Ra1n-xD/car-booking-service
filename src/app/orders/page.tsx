@@ -1,13 +1,12 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 import Loading from '@/components/Loading';
 import OrderItems from '@/components/OrderItems';
 
 const Orders = () => {
     const session = useSession();
-    const router = useRouter();
     console.log(session);
 
     if (session.status === 'loading') {
@@ -15,7 +14,7 @@ const Orders = () => {
     }
 
     if (session.status === 'unauthenticated') {
-        router.push('/login');
+        redirect('/login');
     }
 
     return (
