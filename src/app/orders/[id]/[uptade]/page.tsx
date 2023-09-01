@@ -1,7 +1,4 @@
-'use client';
-
 import Link from 'next/link';
-import { Button } from 'react-bootstrap';
 
 const UpdateOrder = ({ params }: { params: { id: string } }) => {
     return (
@@ -11,15 +8,11 @@ const UpdateOrder = ({ params }: { params: { id: string } }) => {
 
             <div className="mb-4 d-flex offset justify-content-center">
                 <Link href={`/orders/${params.id}`}>
-                    <Button variant="primary" className="mt-4">
-                        К заявке
-                    </Button>
+                    <button className="mt-4 btn btn-primary">К заявке</button>
                 </Link>
 
                 <Link href="/">
-                    <Button variant="danger" className="mt-4">
-                        Удалить заявку
-                    </Button>
+                    <button className="mt-4 btn btn-danger">Удалить заявку</button>
                 </Link>
             </div>
         </div>

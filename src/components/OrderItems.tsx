@@ -3,19 +3,7 @@ import Link from 'next/link';
 import { FaCheckCircle, FaArchive } from 'react-icons/fa';
 import { format } from 'date-fns';
 
-async function getOrders(userEmail: string | null | undefined) {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('userEmail', userEmail as string);
-
-    const orders = await fetch(`/api/orders`, { method: 'GET', headers: headers });
-
-    if (!orders.ok) {
-        throw new Error('Failed to fetch data');
-    }
-
-    return orders.json();
-}
+import { getOrders } from '@/services/getData';
 
 const OrderItems = async ({ userEmail }: { userEmail: string | null | undefined }) => {
     const orders = await getOrders(userEmail);

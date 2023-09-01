@@ -1,28 +1,5 @@
 import Form from '../components/Form';
-
-async function getAutos() {
-    const autos = await fetch(`${process.env.NEXTAUTH_URL}/api/autos`, {
-        next: { revalidate: 60 }
-    });
-
-    if (!autos.ok) {
-        throw new Error('Failed to fetch data');
-    }
-
-    return autos.json();
-}
-
-async function getCities() {
-    const cities = await fetch(`${process.env.NEXTAUTH_URL}/api/cities`, {
-        next: { revalidate: 60 }
-    });
-
-    if (!cities.ok) {
-        throw new Error('Failed to fetch data');
-    }
-
-    return cities.json();
-}
+import { getAutos, getCities } from '@/services/getData';
 
 const Home = async () => {
     const autos = await getAutos();

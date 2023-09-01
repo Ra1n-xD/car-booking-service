@@ -1,17 +1,8 @@
+import { getOrder } from '@/services/getData';
+
 import { FaCheckCircle } from 'react-icons/fa';
 import { format } from 'date-fns';
-
 import Link from 'next/link';
-
-async function getOrder(id: string) {
-    const orders = await fetch(`${process.env.NEXTAUTH_URL}/api/orders/${id}`, { next: { revalidate: 60 } });
-
-    if (!orders.ok) {
-        throw new Error('Failed to fetch data');
-    }
-
-    return orders.json();
-}
 
 const OrderPage = async ({ params }: { params: { id: string } }) => {
     const order = await getOrder(params.id);
