@@ -34,8 +34,7 @@ const authConfig: AuthOptions = {
             }
         })
     ],
-    secret: process.env.NEXTAUTH_SECRET,
-    pages: { error: '/', signIn: '/login' }
+    pages: { error: '/login', signIn: '/login' }
 };
 
 const handler = NextAuth(authConfig);
