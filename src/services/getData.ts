@@ -1,5 +1,5 @@
 export async function getAutos() {
-    const autos = await fetch(`${process.env.NEXTAUTH_URL}/api/autos`, {
+    const autos = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/autos`, {
         next: { revalidate: 60 }
     });
 
@@ -11,7 +11,7 @@ export async function getAutos() {
 }
 
 export async function getCities() {
-    const cities = await fetch(`${process.env.NEXTAUTH_URL}/api/cities`, {
+    const cities = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cities`, {
         next: { revalidate: 60 }
     });
 
@@ -37,7 +37,7 @@ export async function getOrders(userEmail: string | null | undefined) {
 }
 
 export async function getOrder(id: string) {
-    const orders = await fetch(`${process.env.NEXTAUTH_URL}/api/orders/${id}`, { next: { revalidate: 60 } });
+    const orders = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/${id}`, { next: { revalidate: 60 } });
 
     if (!orders.ok) {
         throw new Error('Failed to fetch data');
