@@ -8,7 +8,6 @@ export async function POST(request: Request) {
     await connect();
 
     const newUser = new User({
-        name,
         email,
         password // потом добавлю хеширование
     });
