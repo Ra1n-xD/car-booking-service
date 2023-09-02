@@ -17,6 +17,7 @@ const Orders = () => {
     if (session.status === 'unauthenticated') {
         router.push('/login');
     }
+
     return (
         <div className="mt-5 d-flex flex-column align-items-center">
             <h1 className="mb-1 text-center">Список заявок</h1>
