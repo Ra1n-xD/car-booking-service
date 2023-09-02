@@ -6,7 +6,7 @@ import Credentials from 'next-auth/providers/credentials';
 import connect from '@/utils/db';
 import User from '@/models/User';
 
-export const authConfig: AuthOptions = {
+const authConfig: AuthOptions = {
     providers: [
         Google({
             clientId: process.env.GOOGLE_ID!,

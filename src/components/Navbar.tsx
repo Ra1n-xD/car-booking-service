@@ -37,7 +37,7 @@ const Navbar = () => {
                         <Image src={logo} width={70} height={70} alt="logo" />
 
                         <div className="d-flex flex-column">
-                            <div className="display-6">Абобус-Моторс </div>
+                            <p className="display-6">Абобус-Моторс </p>
                             <span className="lead d-none d-lg-block">Бронирование авто</span>
                         </div>
                     </NavbarBS.Brand>
