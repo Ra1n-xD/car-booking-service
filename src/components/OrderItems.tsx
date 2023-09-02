@@ -17,8 +17,8 @@ const OrderItems = async ({ userEmail }: { userEmail: string | null | undefined 
                         <Link href={`/orders/${order._id}`} className="order-item">
                             Заявка №{i + 1} на автомобиль {order.auto.brand} {order.auto.model.name}
                         </Link>
-                        <p className="text-muted">Статус: {order.status.code}</p>
-                        <p className="text-muted">Дата: {format(new Date(order.createDate), 'dd.MM.yyyy')}</p>
+                        <p className="text-muted">Автомобиль : {order.status.code}</p>
+                        <p className="text-muted">Дата заявки: {format(new Date(order.createDate), 'dd.MM.yyyy')}</p>
                     </div>
                 </div>
             ))}

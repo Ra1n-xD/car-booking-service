@@ -1,63 +1,70 @@
 'use client';
 import { useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Loading from '@/components/Loading';
 
 const Login = () => {
-    const isNewUser = useSearchParams().get('success');
-
-    const router = useRouter();
     const session = useSession();
     console.log(session);
+    const router = useRouter();
 
-    const [error, setError] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    if (session.status === 'loading') {
+        return <Loading />;
+    }
+
+    if (session.status === 'authenticated') {
+        router.push('/orders');
+    }
+
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+    };
+
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
-        const formData = new FormData(e.currentTarget);
-
-        const res = await signIn('credentials', {
-            email: formData.get('email'),
-            password: formData.get('password'),
-            redirect: false
-        });
-        console.log(res);
-
-        if (res && !res.error) {
-            setError(false);
-            router.push('/orders');
-        } else {
-            setError(true);
-        }
+        signIn('credentials', { email, password });
     };
 
     return (
         <div className="container mt-5 d-flex flex-column align-items-center justify-content-center">
             <h2 className="mb-4">Авторизация</h2>
-            {isNewUser && <span className="mb-3 text-success text-center">Вы зарегистрировались, теперь можете войти в аккаунт</span>}
 
-            <form onSubmit={handleSubmit} className="mb-2 col-8 col-lg-4">
-                <input type="email" name="email" className={`mb-4 form-control ${error ? 'is-invalid' : ''}`} placeholder="Email" required />
-                <input type="password" name="password" className={`mb-3 form-control ${error ? 'is-invalid' : ''}`} placeholder="Пароль" required />
-
-                {error && <div className="mb-3 text-danger">Неправильная почта или пароль</div>}
-
+            <form onSubmit={handleSubmit} className="col-8 col-lg-4">
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">
+                        Email
+                    </label>
+                    <input type="email" className="form-control" required id="email" value={email} onChange={handleEmailChange} />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="password" className="form-label">
+                        Пароль
+                    </label>
+                    <input type="password" className="form-control" required id="password" value={password} onChange={handlePasswordChange} />
+                </div>
                 <button type="submit" className="btn btn-primary col-12">
                     Войти
                 </button>
             </form>
 
-            <span className="mb-2 lead text-center"> - ИЛИ - </span>
+            <span className="mt-3 lead"> - ИЛИ - </span>
 
-            <button type="button" className="mb-3 btn btn-outline-primary col-8 col-lg-4" onClick={() => signIn('google')}>
+            <button type="button" className="btn btn-outline-primary mt-3 col-8 col-lg-4" onClick={() => signIn('google')}>
                 Авторизоваться через Google
             </button>
 
-            <span className="text-center">
+            <p className="mt-4">
                 У вас еще нет аккаунта? <Link href="/register">Создать аккаунт</Link>
-            </span>
+            </p>
         </div>
     );
 };

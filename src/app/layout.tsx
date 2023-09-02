@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Redux } from './redux/provider';
+import { Providers } from './redux/provider';
 
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
@@ -18,13 +18,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="en">
             <body>
                 <AuthProvider>
-                    <Redux>
+                    <Providers>
                         <div className="wrapper">
                             <Header />
                             <main className="container">{children}</main>
                             <Footer />
                         </div>
-                    </Redux>
+                    </Providers>
                 </AuthProvider>
             </body>
         </html>

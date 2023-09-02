@@ -22,12 +22,8 @@ export async function getCities() {
     return cities.json();
 }
 
-export async function getOrders(userEmail: string | null | undefined) {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('userEmail', userEmail as string);
-
-    const orders = await fetch(`/api/orders`, { method: 'GET', headers: headers });
+export async function getOrder(id: string) {
+    const orders = await fetch(`${process.env.NEXTAUTH_URL}/api/orders/${id}`, { next: { revalidate: 60 } });
 
     if (!orders.ok) {
         throw new Error('Failed to fetch data');
@@ -36,8 +32,12 @@ export async function getOrders(userEmail: string | null | undefined) {
     return orders.json();
 }
 
-export async function getOrder(id: string) {
-    const orders = await fetch(`${process.env.NEXTAUTH_URL}/api/orders/${id}`, { next: { revalidate: 60 } });
+export async function getOrders(userEmail: string | null | undefined) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('userEmail', userEmail as string);
+
+    const orders = await fetch(`/api/orders`, { method: 'GET', headers: headers });
 
     if (!orders.ok) {
         throw new Error('Failed to fetch data');

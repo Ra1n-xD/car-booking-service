@@ -10,17 +10,17 @@ import SelectCities from './SelectCities';
 import CheckboxField from './CheckboxField';
 import SelectAutos from './SelectAutos';
 
-type Auto = {
+interface Auto {
     _id: string;
     brand: string;
     models: object[];
-};
+}
 
-type City = {
+interface City {
     _id: string;
     code: string;
     name: string;
-};
+}
 
 interface FormProps {
     autos: Auto[];
@@ -30,6 +30,7 @@ interface FormProps {
 const Form = ({ autos, cities }: FormProps) => {
     const session = useSession();
     const authorized = session.status === 'authenticated' ? true : false;
+    // console.log(autos);
 
     const validationSchema = yup.object({
         lastName: yup
@@ -115,6 +116,7 @@ const Form = ({ autos, cities }: FormProps) => {
                     <button type="submit" className="btn btn-success">
                         Отправить заявку
                     </button>
+                    <Link href="/orders/id">имитация отправки</Link>
                 </div>
             ) : (
                 <div className="mb-4 text-danger text-center h6">Чтобы оставить заявку необходимо быть авторизованным</div>
