@@ -34,7 +34,7 @@ const authConfig: AuthOptions = {
             }
         })
     ],
-    pages: { error: '/login', signIn: '/login' }
+    pages: { signIn: '/login' }
 };
 
 const handler = NextAuth(authConfig);
