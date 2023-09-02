@@ -38,7 +38,7 @@ const Login = () => {
             <h2 className="mb-4">Авторизация</h2>
             {isNewUser && <span className="mb-3 text-success text-center">Вы зарегистрировались, теперь можете войти в аккаунт</span>}
 
-            <form onSubmit={handleSubmit} className="mb-2 col-8 col-lg-4">
+            <form onSubmit={handleSubmit} className="mb-2 col-12 col-md-8 col-lg-6 col-xl-5">
                 <input type="email" name="email" className={`mb-4 form-control ${error ? 'is-invalid' : ''}`} placeholder="Email" required />
                 <input type="password" name="password" className={`mb-3 form-control ${error ? 'is-invalid' : ''}`} placeholder="Пароль" required />
 
@@ -51,7 +51,7 @@ const Login = () => {
 
             <span className="mb-2 lead text-center"> - ИЛИ - </span>
 
-            <button type="button" className="mb-3 btn btn-outline-primary col-8 col-lg-4" onClick={() => signIn('google')}>
+            <button type="button" className="mb-3 btn btn-outline-primary col-12 col-md-8 col-lg-6 col-xl-5" onClick={() => signIn('google')}>
                 Авторизоваться через Google
             </button>
 
