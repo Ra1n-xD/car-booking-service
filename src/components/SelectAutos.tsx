@@ -15,6 +15,8 @@ const SelectAutos: React.FC<SelectAutosProps> = ({ fieldBrand, fieldModel, form,
     const isErrorBrand = form.touched[fieldBrand.name] && form.errors[fieldBrand.name];
     const isErrorModel = form.touched[fieldModel.name] && form.errors[fieldModel.name];
 
+    const isBrandSelected = !!fieldBrand.value;
+
     return (
         <>
             <div className="col-md-6 mb-4">
@@ -32,7 +34,7 @@ const SelectAutos: React.FC<SelectAutosProps> = ({ fieldBrand, fieldModel, form,
             </div>
 
             <div className="col-md-6 mb-4">
-                <select className={`form-select ${isErrorModel ? 'is-invalid' : ''}`} {...fieldModel} disabled={isEdited}>
+                <select className={`form-select ${isErrorModel ? 'is-invalid' : ''}`} {...fieldModel} disabled={!isBrandSelected || isEdited}>
                     <option value="" disabled>
                         Модель автомобиля
                     </option>
