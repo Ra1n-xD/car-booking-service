@@ -1,5 +1,5 @@
 export async function getAutos() {
-    const autos = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/autos`, {
+    const autos = await fetch(`${process.env.NEXTAUTH_URL}/api/autos`, {
         next: { revalidate: 60 }
     });
 
@@ -11,7 +11,7 @@ export async function getAutos() {
 }
 
 export async function getCities() {
-    const cities = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cities`, {
+    const cities = await fetch(`${process.env.NEXTAUTH_URL}/api/cities`, {
         next: { revalidate: 60 }
     });
 
@@ -22,12 +22,12 @@ export async function getCities() {
     return cities.json();
 }
 
-export async function getOrders(userEmail: any) {
+export async function getOrders(userEmail: string | null | undefined) {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('userEmail', userEmail as string);
 
-    const orders = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders`, { method: 'GET', headers: headers });
+    const orders = await fetch(`/api/orders`, { method: 'GET', headers: headers });
 
     if (!orders.ok) {
         throw new Error('Failed to fetch data');
@@ -37,7 +37,7 @@ export async function getOrders(userEmail: any) {
 }
 
 export async function getOrder(id: string) {
-    const orders = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/${id}`, { next: { revalidate: 60 } });
+    const orders = await fetch(`${process.env.NEXTAUTH_URL}/api/orders/${id}`, { next: { revalidate: 60 } });
 
     if (!orders.ok) {
         throw new Error('Failed to fetch data');
