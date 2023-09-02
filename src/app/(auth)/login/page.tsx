@@ -27,7 +27,7 @@ const Login = () => {
 
         if (res && !res.error) {
             setError(false);
-            router.push('/orders');
+            router.push('/');
         } else {
             setError(true);
         }
