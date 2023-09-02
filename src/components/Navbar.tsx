@@ -10,6 +10,7 @@ import logo from '../../public/logo.png';
 
 const Navbar = () => {
     const session = useSession();
+    const authorized = session.status === 'authenticated' ? true : false;
 
     const [showMenu, setShowMenu] = useState(false);
 
@@ -22,8 +23,8 @@ const Navbar = () => {
     };
 
     const handleAuth = () => {
-        if (session.status === 'authenticated') {
-            signOut();
+        if (authorized) {
+            signOut({ callbackUrl: '/login' });
         }
         setShowMenu(false);
     };
@@ -51,20 +52,19 @@ const Navbar = () => {
 
                     <Offcanvas.Body>
                         <Nav className="navigation justify-content-end flex-grow-1">
-                            {session.status === 'authenticated' && (
-                                <Link href="/" className="navigation-item" onClick={handleMenuClose}>
-                                    Оставить заявку
-                                </Link>
+                            {authorized && (
+                                <>
+                                    <Link href="/" className="navigation-item" onClick={handleMenuClose}>
+                                        Оставить заявку
+                                    </Link>
+                                    <Link href="/orders" className="navigation-item" onClick={handleMenuClose}>
+                                        Мои заявки
+                                    </Link>
+                                </>
                             )}
 
-                            {session.status === 'authenticated' && (
-                                <Link href="/orders" className="navigation-item" onClick={handleMenuClose}>
-                                    Мои заявки
-                                </Link>
-                            )}
-
-                            <Link href={session.status === 'authenticated' ? '/' : '/login'} className="navigation-item" onClick={handleAuth}>
-                                <Button variant="outline-primary">{session.status === 'authenticated' ? 'Выйти' : 'Войти'}</Button>
+                            <Link href="/login" className="navigation-item" onClick={handleAuth}>
+                                <Button variant="outline-primary">{authorized ? 'Выйти' : 'Войти'}</Button>
                             </Link>
                         </Nav>
                     </Offcanvas.Body>
