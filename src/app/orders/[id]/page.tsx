@@ -23,16 +23,12 @@ const OrderPage = async ({ params }: { params: { id: string } }) => {
             <p className="lead mt-2 text-center">Дата заявки: {format(new Date(order.createDate), 'dd.MM.yyyy')}</p>
 
             <div className="mb-4 d-flex offset justify-content-center">
-                <Link href="/orders">
-                    <button type="submit" className="mt-4 btn btn-primary">
-                        К списку заявок
-                    </button>
+                <Link href="/orders" className="mt-4 btn btn-primary">
+                    К списку заявок
                 </Link>
 
-                <Link href={`/orders/${params.id}/update`}>
-                    <button type="submit" className="mt-4 btn btn-success">
-                        Редактировать заявку
-                    </button>
+                <Link href={`/orders/${params.id}/update`} className="mt-4 btn btn-success">
+                    Редактировать заявку
                 </Link>
             </div>
         </div>
