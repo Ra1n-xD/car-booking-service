@@ -13,7 +13,7 @@ const OrderPage = async ({ params }: { params: { id: string } }) => {
         <div className="mt-5">
             <div className="mb-3 d-flex justify-content-center align-items-center offset">
                 <FaCheckCircle size={50} color="#0080ff" />
-                <h2>Ваша заявка №{params.id}</h2>
+                <h2>Ваша заявка №{'Порядковый номер тут'}</h2>
             </div>
 
             <p className="lead mt-2 text-center ">

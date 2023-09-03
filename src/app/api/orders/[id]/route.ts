@@ -3,7 +3,7 @@ import connect from '@/utils/db';
 
 import { NextResponse } from 'next/server';
 
-export const GET = async (request: Request, { params }: { params: { id: string } }) => {
+export async function GET(request: Request, { params }: { params: { id: string } }) {
     const { id } = params;
 
     try {
@@ -19,4 +19,4 @@ export const GET = async (request: Request, { params }: { params: { id: string }
     } catch (error) {
         return NextResponse.json('Internal Server Error', { status: 500 });
     }
-};
+}

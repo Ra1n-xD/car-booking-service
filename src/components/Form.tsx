@@ -1,6 +1,6 @@
 'use client';
-import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -30,6 +30,9 @@ interface FormProps {
 const Form = ({ autos, cities }: FormProps) => {
     const session = useSession();
     const authorized = session.status === 'authenticated' ? true : false;
+    // console.log(autos, cities);
+
+    const [submitButtonClicked, setSubmitButtonClicked] = useState<null | string>(null);
 
     const validationSchema = yup.object({
         lastName: yup
@@ -65,8 +68,45 @@ const Form = ({ autos, cities }: FormProps) => {
             agreement: false
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
             console.log(values);
+            let status = 'DRAFT';
+            if (submitButtonClicked === 'PROCESSING') status = 'PROCESSING';
+
+            const orderData = {
+                status: { code: status },
+                person: {
+                    lastName: formik.values.lastName,
+                    firstName: formik.values.firstName,
+                    middleName: formik.values.middleName,
+                    email: formik.values.email,
+                    driverLicense: formik.values.driverLicense
+                },
+                auto: {
+                    brand: formik.values.carBrand,
+                    model: {
+                        id: 221,
+                        name: formik.values.carModel
+                    }
+                },
+                city: {
+                    code: formik.values.city,
+                    name: ''
+                },
+                userId: session.data?.user?.email,
+                createDate: new Date().toISOString()
+            };
+
+            await fetch('/api/orders', {
+                method: 'POST',
+                body: JSON.stringify(orderData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            formik.resetForm();
+            setSubmitButtonClicked(null);
         }
     });
 
@@ -80,11 +120,10 @@ const Form = ({ autos, cities }: FormProps) => {
         formik.setFieldValue('driverLicense', formattedInput);
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-        const { carBrand, carModel, city, driverLicense, email, firstName, lastName, middleName } = formik.values;
 
-        console.log(carBrand, carModel, city, driverLicense, email, firstName, lastName, middleName);
+        formik.handleSubmit();
     };
 
     return (
@@ -109,10 +148,10 @@ const Form = ({ autos, cities }: FormProps) => {
 
             {authorized ? (
                 <div className="mb-4 d-flex offset justify-content-start">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn btn-primary" onClick={() => setSubmitButtonClicked('DRAFT')}>
                         Сохранить
                     </button>
-                    <button type="submit" className="btn btn-success">
+                    <button type="submit" className="btn btn-success" onClick={() => setSubmitButtonClicked('PROCESSING')}>
                         Отправить заявку
                     </button>
                 </div>
