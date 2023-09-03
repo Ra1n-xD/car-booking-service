@@ -1,6 +1,7 @@
 'use client';
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -28,6 +29,7 @@ interface FormProps {
 }
 
 const Form = ({ autos, cities }: FormProps) => {
+    const router = useRouter();
     const session = useSession();
     const authorized = session.status === 'authenticated' ? true : false;
     // console.log(autos, cities);
@@ -97,7 +99,7 @@ const Form = ({ autos, cities }: FormProps) => {
                 createDate: new Date().toISOString()
             };
 
-            await fetch('/api/orders', {
+            const addOrder = await fetch('/api/orders', {
                 method: 'POST',
                 body: JSON.stringify(orderData),
                 headers: {
@@ -105,8 +107,11 @@ const Form = ({ autos, cities }: FormProps) => {
                 }
             });
 
-            formik.resetForm();
+            const newOrder = await addOrder.json();
+
             setSubmitButtonClicked(null);
+
+            router.push(`/orders/${newOrder._id}`);
         }
     });
 

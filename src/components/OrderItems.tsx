@@ -51,6 +51,10 @@ const OrderItems = ({ userEmail }: { userEmail: string | unknown }) => {
                             <Link href={`/orders/${order._id}`} className="order-item">
                                 Заявка №{i + 1} на автомобиль {order.auto.brand} {order.auto.model.name}
                             </Link>
+                            <div className="text-muted">
+                                Заказчик: {order.person.lastName} {order.person.firstName} {order.person.secondName}
+                            </div>
+                            <div className="text-muted">Город: {order.city.name}</div>
                             <div className="text-muted">Статус: {order.status.code}</div>
                             <div className="text-muted">Дата: {format(new Date(order.createDate), 'dd.MM.yyyy')}</div>
                         </div>
