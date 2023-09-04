@@ -1,3 +1,5 @@
+import { useSession } from 'next-auth/react';
+
 import { FieldProps, FormikErrors, FormikTouched } from 'formik';
 
 interface InputFieldProps {
@@ -11,6 +13,9 @@ interface InputFieldProps {
 }
 
 const InputField: React.FC<InputFieldProps> = ({ field, form, placeholder, isEdited }) => {
+    const session = useSession();
+    const userEmail = session.data?.user?.email;
+
     const isError = form.touched[field.name] && form.errors[field.name];
 
     return (

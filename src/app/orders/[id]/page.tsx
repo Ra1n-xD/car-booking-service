@@ -1,42 +1,34 @@
 import { getOrder } from '@/services/getData';
+import { authConfig } from '@/app/api/auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth/next';
+import { redirect } from 'next/navigation';
 
-import { FaCheckCircle } from 'react-icons/fa';
-import { format } from 'date-fns';
+import { FaCheckCircle, FaArchive, FaUndo } from 'react-icons/fa';
 
-import Link from 'next/link';
+import OrderDetails from '@/components/OrderDetails';
+
+const getStatusLogo = (statusCode: string) => {
+    switch (statusCode) {
+        case 'PROCESSING':
+            return <FaUndo size={40} color="#0080ff" className="spinner m-1" />;
+        case 'SUCCESS':
+            return <FaCheckCircle size={40} color="#0080ff" className="m-1" />;
+        case 'DRAFT':
+            return <FaArchive size={40} color="#0080ff" className="m-1" />;
+        default:
+            return null;
+    }
+};
 
 const OrderPage = async ({ params }: { params: { id: string } }) => {
     const order = await getOrder(params.id);
-    console.log(order);
+    const session = await getServerSession(authConfig);
 
-    return (
-        <div className="mt-5">
-            <div className="mb-3 d-flex justify-content-center align-items-center offset">
-                <FaCheckCircle size={50} color="#0080ff" />
-                <h2>Ваша заявка №{'...'}</h2>
-            </div>
+    if (session?.user?.email !== order.userId) {
+        redirect('/login');
+    }
 
-            <p className="lead mt-2 text-center">
-                Заказчик: {order.person.lastName} {order.person.firstName} {order.person.secondName}
-            </p>
-            <p className="lead mt-2 text-center">
-                Автомобиль: {order.auto.brand} {order.auto.model.name}
-            </p>
-            <p className="lead mt-2 text-center">Город: {order.city.name}</p>
-            <p className="lead mt-2 text-center">Статус заявки: {order.status.code}</p>
-            <p className="lead mt-2 text-center">Дата заявки: {format(new Date(order.createDate), 'dd.MM.yyyy')}</p>
-
-            <div className="mb-4 d-flex offset justify-content-center">
-                <Link href="/orders" className="mt-4 btn btn-primary">
-                    К списку заявок
-                </Link>
-
-                <Link href={`/orders/${params.id}/update`} className="mt-4 btn btn-success">
-                    Редактировать заявку
-                </Link>
-            </div>
-        </div>
-    );
+    return <OrderDetails id={params.id} order={order} statusIcon={getStatusLogo(order.status.code)} />;
 };
 
 export default OrderPage;

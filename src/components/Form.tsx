@@ -31,7 +31,9 @@ interface FormProps {
 const Form = ({ autos, cities }: FormProps) => {
     const router = useRouter();
     const session = useSession();
+    const userEmail = session.data?.user?.email;
     const authorized = session.status === 'authenticated' ? true : false;
+    console.log(userEmail);
     // console.log(autos, cities);
 
     const [submitButtonClicked, setSubmitButtonClicked] = useState<null | string>(null);

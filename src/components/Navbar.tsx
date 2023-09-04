@@ -64,7 +64,7 @@ const Navbar = () => {
                             )}
 
                             <Link href="/login" className="navigation-item" onClick={handleAuth}>
-                                <Button variant="outline-primary">{authorized ? 'Выйти' : 'Войти'}</Button>
+                                <Button variant="outline-primary">{authorized ? `Выйти` : `Войти`}</Button>
                             </Link>
                         </Nav>
                     </Offcanvas.Body>
