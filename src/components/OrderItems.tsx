@@ -66,16 +66,14 @@ const getStatusLogo = (statusCode: string) => {
 };
 
 const OrderItems = ({ userEmail }: { userEmail: string | unknown }) => {
-    const { data: orders, isLoading } = useSWR(`orders`, () => getOrders(userEmail as string));
+    const { data: orders, isLoading, error } = useSWR(`orders`, () => getOrders(userEmail as string));
     console.log(orders);
 
-    if (isLoading) {
-        return <Loading />;
-    }
+    if (isLoading) return <Loading />;
 
-    if (orders.length <= 0) {
-        return <p className="mt-3 text-muted">СПИСОК ЗАЯВОК ПУСТ</p>;
-    }
+    if (error) return <p className="mt-3 text-danger text-center">Ошикба загрузки данных, посетите сайт позже или перезагрузите страницу</p>;
+
+    if (orders.length <= 0) return <p className="mt-3 text-muted">СПИСОК ЗАЯВОК ПУСТ</p>;
 
     return (
         <div className="d-flex flex-column-reverse">

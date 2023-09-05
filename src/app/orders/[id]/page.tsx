@@ -24,8 +24,12 @@ const OrderPage = async ({ params }: { params: { id: string } }) => {
     const order = await getOrder(params.id);
     const session = await getServerSession(authConfig);
 
+    if (order.error) {
+        return <p className="mt-3 h2 text-danger text-center">Ошикба загрузки данных, посетите сайт позже или перезагрузите страницу</p>;
+    }
+
     if (session?.user?.email !== order.userId) {
-        redirect('/login');
+        return <p className="mt-3 h2 text-danger text-center">Данная заявка не найдена в вашем профиле</p>;
     }
 
     return <OrderDetails id={params.id} order={order} statusIcon={getStatusLogo(order.status.code)} />;

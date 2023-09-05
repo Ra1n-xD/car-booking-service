@@ -1,47 +1,63 @@
 export async function getAutos() {
-    const autos = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/autos`, {
-        next: { revalidate: 60 }
-    });
+    try {
+        const autos = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/autos`, {
+            next: { revalidate: 60 }
+        });
 
-    if (!autos.ok) {
-        throw new Error('Failed to fetch data');
+        if (!autos.ok) {
+            return { error: 'Failed to fetch data' };
+        }
+
+        return autos.json();
+    } catch (error: any) {
+        throw new Error(error);
     }
-
-    return autos.json();
 }
 
 export async function getCities() {
-    const cities = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cities`, {
-        next: { revalidate: 60 }
-    });
+    try {
+        const cities = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cities`, {
+            next: { revalidate: 60 }
+        });
 
-    if (!cities.ok) {
-        throw new Error('Failed to fetch data');
+        if (!cities.ok) {
+            return { error: 'Failed to fetch data' };
+        }
+
+        return cities.json();
+    } catch (error: any) {
+        throw new Error(error);
     }
-
-    return cities.json();
 }
 
 export async function getOrders(userEmail: string | null | undefined) {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('userEmail', userEmail as string);
+    try {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('userEmail', userEmail as string);
 
-    const orders = await fetch(`/api/orders`, { method: 'GET', headers: headers });
+        const orders = await fetch(`/api/orders`, { method: 'GET', headers: headers });
 
-    if (!orders.ok) {
-        throw new Error('Failed to fetch data');
+        if (!orders.ok) {
+            return { error: 'Failed to fetch data' };
+        }
+
+        return orders.json();
+    } catch (error: any) {
+        throw new Error(error);
     }
-
-    return orders.json();
 }
 
 export async function getOrder(id: string) {
-    const orders = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/${id}`, { next: { revalidate: 60 } });
+    try {
+        const order = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/${id}`, { next: { revalidate: 60 } });
 
-    if (!orders.ok) {
-        throw new Error('Failed to fetch data');
+        if (!order.ok) {
+            return { error: 'Failed to fetch data' };
+        }
+
+        return order.json();
+    } catch (error: any) {
+        throw new Error(error);
     }
-
-    return orders.json();
 }
