@@ -1,5 +1,9 @@
 const Loading = () => {
-    return <div className="loading-container spinner-border" role="status"></div>;
+    return (
+        <div className="loading-container">
+            <div className="spinner-border" role="status"></div>;
+        </div>
+    );
 };
 
 export default Loading;
