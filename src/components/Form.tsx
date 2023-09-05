@@ -10,6 +10,7 @@ import InputField from './InputField';
 import SelectCities from './SelectCities';
 import CheckboxField from './CheckboxField';
 import SelectAutos from './SelectAutos';
+import Loading from './Loading';
 
 type Auto = {
     _id: string;
@@ -30,10 +31,12 @@ interface FormProps {
 
 const Form = ({ autos, cities }: FormProps) => {
     const router = useRouter();
+
     const session = useSession();
-    const userEmail = session.data?.user?.email;
-    const authorized = session.status === 'authenticated' ? true : false;
-    console.log(userEmail);
+    const authorized = session.status === 'authenticated';
+    const isLoading = session.status === 'loading';
+
+    console.log(session);
     // console.log(autos, cities);
 
     const [submitButtonClicked, setSubmitButtonClicked] = useState<null | string>(null);
@@ -89,13 +92,13 @@ const Form = ({ autos, cities }: FormProps) => {
                 auto: {
                     brand: formik.values.carBrand,
                     model: {
-                        id: 221,
+                        id: 'Вставить даныне как-то',
                         name: formik.values.carModel
                     }
                 },
                 city: {
                     code: formik.values.city,
-                    name: ''
+                    name: 'Вставить даныне как-то'
                 },
                 userId: session.data?.user?.email,
                 createDate: new Date().toISOString()
@@ -132,6 +135,10 @@ const Form = ({ autos, cities }: FormProps) => {
 
         formik.handleSubmit();
     };
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <form onSubmit={handleSubmit} className="col-11 col-lg-8 col-xl-6">

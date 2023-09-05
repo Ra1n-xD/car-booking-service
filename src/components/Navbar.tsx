@@ -7,10 +7,12 @@ import Image from 'next/image';
 import { signOut, useSession } from 'next-auth/react';
 
 import logo from '../../public/logo.png';
+import Loading from './Loading';
 
 const Navbar = () => {
     const session = useSession();
-    const authorized = session.status === 'authenticated' ? true : false;
+    const authorized = session.status === 'authenticated';
+    const isLoading = session.status === 'loading';
 
     const [showMenu, setShowMenu] = useState(false);
 
@@ -63,9 +65,13 @@ const Navbar = () => {
                                 </>
                             )}
 
-                            <Link href="/login" className="navigation-item" onClick={handleAuth}>
-                                <Button variant="outline-primary">{authorized ? `Выйти` : `Войти`}</Button>
-                            </Link>
+                            {!isLoading ? (
+                                <Link href="/login" className="navigation-item" onClick={handleAuth}>
+                                    <Button variant="outline-primary">{authorized ? `Выйти` : `Войти`}</Button>
+                                </Link>
+                            ) : (
+                                <Loading />
+                            )}
                         </Nav>
                     </Offcanvas.Body>
                 </NavbarBS.Offcanvas>
