@@ -1,7 +1,7 @@
 const Loading = () => {
     return (
         <div className="loading-container">
-            <div className="spinner-border" role="status"></div>;
+            <div className="spinner-border" role="status"></div>
         </div>
     );
 };
