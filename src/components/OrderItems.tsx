@@ -66,7 +66,7 @@ const getStatusLogo = (statusCode: string) => {
 };
 
 const OrderItems = ({ userEmail }: { userEmail: string | unknown }) => {
-    const { data: orders, isLoading } = useSWR(`/api/orders`, () => getOrders(userEmail as string));
+    const { data: orders, isLoading } = useSWR(`orders`, () => getOrders(userEmail as string));
     console.log(orders);
 
     if (isLoading) {
