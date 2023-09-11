@@ -10,14 +10,14 @@ export async function GET(request: Request) {
         const userEmail = request.headers.get('userEmail');
 
         if (!userEmail) {
-            return NextResponse.json('Not find email', { status: 400 });
+            return NextResponse.json({ error: 'Not find email' }, { status: 400 });
         }
 
         const orders = await Order.find({ userId: userEmail });
 
         return NextResponse.json(orders, { status: 200 });
     } catch (error) {
-        return NextResponse.json('Internal Server Error', { status: 500 });
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
 
@@ -30,13 +30,13 @@ export async function POST(request: Request) {
         await connect();
 
         if (!body) {
-            return NextResponse.json('Order not added', { status: 400 });
+            return NextResponse.json({ error: 'Order not added' }, { status: 400 });
         }
 
         await newOrder.save();
 
         return NextResponse.json(newOrder, { status: 200 });
     } catch (error) {
-        return NextResponse.json('Internal Server Error', { status: 500 });
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

@@ -4,6 +4,8 @@ import { signIn, useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
+import Loading from '@/components/Loading';
+
 const Login = () => {
     const isNewUser = useSearchParams().get('success');
 
@@ -12,6 +14,10 @@ const Login = () => {
     console.log(session);
 
     const [error, setError] = useState(false);
+
+    if (session.status === 'loading') {
+        return <Loading />;
+    }
 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();

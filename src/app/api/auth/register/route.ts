@@ -3,7 +3,7 @@ import connect from '@/utils/db';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-    const { name, email, password } = await request.json();
+    const { email, password } = await request.json();
 
     await connect();
 
@@ -16,7 +16,6 @@ export async function POST(request: Request) {
         await newUser.save();
         return NextResponse.json('User has been created', { status: 201 });
     } catch (error: any) {
-        console.log('aboa');
-        return NextResponse.json(JSON.stringify(error.message), { status: 500 });
+        return NextResponse.json(error, { status: 500 });
     }
 }

@@ -12,12 +12,12 @@ export async function GET(request: Request, { params }: { params: { id: string }
         const order = await Order.findById(id);
 
         if (!order) {
-            return NextResponse.json('Not find order', { status: 400 });
+            return NextResponse.json({ error: 'Not find order' }, { status: 400 });
         }
 
         return NextResponse.json(order, { status: 200 });
     } catch (error) {
-        return NextResponse.json('Internal Server Error', { status: 500 });
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
 
@@ -29,8 +29,8 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 
         await Order.findByIdAndDelete(id);
 
-        return new NextResponse('Post has been deleted', { status: 200 });
+        return NextResponse.json('Order has been deleted', { status: 200 });
     } catch (error) {
-        return new NextResponse('Error in response of DB', { status: 500 });
+        return NextResponse.json({ error: 'Error in response of DB' }, { status: 500 });
     }
 }

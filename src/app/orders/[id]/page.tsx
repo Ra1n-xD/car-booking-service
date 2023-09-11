@@ -1,7 +1,6 @@
 import { getOrder } from '@/services/getData';
 import { authConfig } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth/next';
-import { redirect } from 'next/navigation';
 
 import { FaCheckCircle, FaArchive, FaUndo } from 'react-icons/fa';
 
@@ -25,7 +24,7 @@ const OrderPage = async ({ params }: { params: { id: string } }) => {
     const session = await getServerSession(authConfig);
 
     if (order.error) {
-        return <p className="mt-3 h2 text-danger text-center">Ошикба загрузки данных, посетите сайт позже или перезагрузите страницу</p>;
+        return <p className="mt-3 h2 text-danger text-center">Ошикба загрузки данных или заявки не существует</p>;
     }
 
     if (session?.user?.email !== order.userId) {

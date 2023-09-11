@@ -1,11 +1,9 @@
 export async function getAutos() {
     try {
-        const autos = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/autos`, {
-            next: { revalidate: 60 }
-        });
+        const autos = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/autos`);
 
         if (!autos.ok) {
-            return { error: 'Failed to fetch data' };
+            console.error('Ошибка загрузки данных');
         }
 
         return autos.json();
@@ -16,12 +14,10 @@ export async function getAutos() {
 
 export async function getCities() {
     try {
-        const cities = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cities`, {
-            next: { revalidate: 60 }
-        });
+        const cities = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/cities`);
 
         if (!cities.ok) {
-            return { error: 'Failed to fetch data' };
+            console.error('Ошибка загрузки данных');
         }
 
         return cities.json();
@@ -39,7 +35,7 @@ export async function getOrders(userEmail: string | null | undefined) {
         const orders = await fetch(`/api/orders`, { method: 'GET', headers: headers });
 
         if (!orders.ok) {
-            return { error: 'Failed to fetch data' };
+            console.error('Ошибка загрузки данных');
         }
 
         return orders.json();
@@ -50,10 +46,10 @@ export async function getOrders(userEmail: string | null | undefined) {
 
 export async function getOrder(id: string) {
     try {
-        const order = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/${id}`, { next: { revalidate: 60 } });
+        const order = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/${id}`);
 
         if (!order.ok) {
-            return { error: 'Failed to fetch data' };
+            console.error('Ошибка загрузки данных');
         }
 
         return order.json();
