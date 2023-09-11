@@ -94,7 +94,7 @@ header {
 }
 
 .spinner {
-    animation: spin 1.5s linear infinite;
+    animation: spin 2.5s linear infinite;
 }
 
 @keyframes spin {

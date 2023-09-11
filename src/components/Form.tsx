@@ -56,7 +56,7 @@ const Form = ({ autos, cities }: FormProps) => {
             .string()
             .matches(/^\d{4}\s\d{6}$/, 'Формат: 9999 999999')
             .required('Обязательное поле'),
-        city: yup.string().required('Обязательное поле'),
+        cityCode: yup.string().required('Обязательное поле'),
         carBrand: yup.string().required('Обязательное поле'),
         carModel: yup.string().required('Обязательное поле'),
         agreement: yup.boolean().oneOf([true], 'Необходимо согласие на обработку данных').required('Необходимо согласие на обработку данных')
@@ -69,9 +69,11 @@ const Form = ({ autos, cities }: FormProps) => {
             middleName: '',
             email: '',
             driverLicense: '',
-            city: '',
+            cityCode: '',
+            cityName: '',
             carBrand: '',
             carModel: '',
+            carModelId: '',
             agreement: false
         },
         validationSchema: validationSchema,
@@ -92,13 +94,13 @@ const Form = ({ autos, cities }: FormProps) => {
                 auto: {
                     brand: formik.values.carBrand,
                     model: {
-                        id: 'Вставить даныне как-то',
+                        id: formik.values.carModelId,
                         name: formik.values.carModel
                     }
                 },
                 city: {
-                    code: formik.values.city,
-                    name: 'Вставить даныне как-то'
+                    code: formik.values.cityCode,
+                    name: formik.values.cityName
                 },
                 userId: session.data?.user?.email,
                 createDate: new Date().toISOString()
@@ -144,18 +146,25 @@ const Form = ({ autos, cities }: FormProps) => {
         <form onSubmit={handleSubmit} className="col-11 col-lg-8 col-xl-6">
             <InputField field={formik.getFieldProps('lastName')} form={formik} placeholder="Фамилия" isEdited={!authorized} />
             <InputField field={formik.getFieldProps('firstName')} form={formik} placeholder="Имя" isEdited={!authorized} />
-            <InputField field={formik.getFieldProps('middleName')} form={formik} placeholder="Отчество" isEdited={!authorized} />
+            <InputField field={formik.getFieldProps('middleName')} form={formik} placeholder="Отчество" isEdited={!authorized} isRequired={false} />
             <InputField field={formik.getFieldProps('email')} form={formik} placeholder="Email" isEdited={!authorized} />
 
             <div className="row">
                 <div className="col-md-6" onChange={handleDriverLicenseChange}>
                     <InputField field={formik.getFieldProps('driverLicense')} form={formik} placeholder="Водительское удостоверение" isEdited={!authorized} />
                 </div>
-                <SelectCities field={formik.getFieldProps('city')} form={formik} cities={cities} isEdited={!authorized} />
+                <SelectCities fieldCode={formik.getFieldProps('cityCode')} form={formik} cities={cities} isEdited={!authorized} />
             </div>
 
             <div className="row">
-                <SelectAutos fieldBrand={formik.getFieldProps('carBrand')} fieldModel={formik.getFieldProps('carModel')} form={formik} autos={autos} isEdited={!authorized} />
+                <SelectAutos
+                    fieldBrand={formik.getFieldProps('carBrand')}
+                    fieldModel={formik.getFieldProps('carModel')}
+                    fieldModelId={formik.getFieldProps('carModelId')}
+                    form={formik}
+                    autos={autos}
+                    isEdited={!authorized}
+                />
             </div>
 
             <CheckboxField field={formik.getFieldProps('agreement')} form={formik} label="Согласие на обработку персональных данных" isEdited={!authorized} />

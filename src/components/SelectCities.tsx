@@ -1,23 +1,32 @@
 import { FieldProps, FormikErrors, FormikTouched } from 'formik';
 
 interface SelectCitiesProps {
-    field: FieldProps['field'];
+    fieldCode: FieldProps['field'];
     form: {
         touched: FormikTouched<any>;
         errors: FormikErrors<any>;
+        setFieldValue: (field: string, value: any) => void;
     };
     cities: any[];
     isEdited: boolean;
 }
 
-const SelectCities: React.FC<SelectCitiesProps> = ({ field, form, cities, isEdited }) => {
-    const isError = form.touched[field.name] && form.errors[field.name];
+const SelectCities: React.FC<SelectCitiesProps> = ({ fieldCode, form, cities, isEdited }) => {
+    const isError = form.touched[fieldCode.name] && form.errors[fieldCode.name];
+
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedCityCode = e.target.value;
+        const selectedCity = cities.find((city) => city.code === selectedCityCode);
+
+        form.setFieldValue('cityCode', selectedCityCode);
+        form.setFieldValue('cityName', selectedCity.name);
+    };
 
     return (
         <div className="col-md-6 mb-4">
-            <select className={`form-select ${isError ? 'is-invalid' : ''}`} {...field} disabled={isEdited}>
+            <select className={`form-select ${isError ? 'is-invalid' : ''}`} value={fieldCode.value} disabled={isEdited} onChange={handleChange}>
                 <option value="" disabled>
-                    Город
+                    Город*
                 </option>
                 {cities.map((city) => (
                     <option key={city._id} value={city.code}>
@@ -26,7 +35,7 @@ const SelectCities: React.FC<SelectCitiesProps> = ({ field, form, cities, isEdit
                 ))}
             </select>
 
-            {isError && <span className="invalid-feedback">{form.errors[field.name] as string}</span>}
+            {isError && <span className="invalid-feedback">{form.errors[fieldCode.name] as string}</span>}
         </div>
     );
 };
