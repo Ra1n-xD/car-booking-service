@@ -1,18 +1,6 @@
 import Link from 'next/link';
 import { format } from 'date-fns';
-
-const getStatusName = (statusCode: string) => {
-    switch (statusCode) {
-        case 'SUCCESS':
-            return 'Успех';
-        case 'PROCESSING':
-            return 'В обработке';
-        case 'DRAFT':
-            return 'Черновик';
-        default:
-            return 'Неизвестный статус';
-    }
-};
+import { getStatusName } from '@/utils/statusFormat';
 
 const OrderDetails = ({ id, order, statusIcon }: any) => {
     return (

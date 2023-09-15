@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 import { useFormik } from 'formik';
-import * as yup from 'yup';
+import { validationSchema, initialValues } from '@/utils/validationForm';
 
 import InputField from './InputField';
 import SelectCities from './SelectCities';
@@ -39,51 +39,16 @@ const Form = ({ autos, cities }: FormProps) => {
     console.log(session);
     // console.log(autos, cities);
 
-    const [submitButtonClicked, setSubmitButtonClicked] = useState<null | string>(null);
-
-    const validationSchema = yup.object({
-        lastName: yup
-            .string()
-            .required('Обязательное поле')
-            .matches(/^[А-Яа-я]+$/, 'Только кириллица'),
-        firstName: yup
-            .string()
-            .required('Обязательное поле')
-            .matches(/^[А-Яа-я]+$/, 'Только кириллица'),
-        middleName: yup.string().matches(/^[А-Яа-я]+$/, 'Только кириллица'),
-        email: yup.string().email('Некорректный email').required('Обязательное поле'),
-        driverLicense: yup
-            .string()
-            .matches(/^\d{4}\s\d{6}$/, 'Формат: 9999 999999')
-            .required('Обязательное поле'),
-        cityCode: yup.string().required('Обязательное поле'),
-        carBrand: yup.string().required('Обязательное поле'),
-        carModel: yup.string().required('Обязательное поле'),
-        agreement: yup.boolean().oneOf([true], 'Необходимо согласие на обработку данных').required('Необходимо согласие на обработку данных')
-    });
+    const [submitStatus, setSubmitStatus] = useState<null | string>(null);
 
     const formik = useFormik({
-        initialValues: {
-            lastName: '',
-            firstName: '',
-            middleName: '',
-            email: '',
-            driverLicense: '',
-            cityCode: '',
-            cityName: '',
-            carBrand: '',
-            carModel: '',
-            carModelId: '',
-            agreement: false
-        },
+        initialValues: initialValues,
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             console.log(values);
-            let status = 'DRAFT';
-            if (submitButtonClicked === 'PROCESSING') status = 'PROCESSING';
 
             const orderData = {
-                status: { code: status },
+                status: { code: submitStatus },
                 person: {
                     lastName: formik.values.lastName,
                     firstName: formik.values.firstName,
@@ -116,7 +81,7 @@ const Form = ({ autos, cities }: FormProps) => {
 
             const newOrder = await addOrder.json();
 
-            setSubmitButtonClicked(null);
+            setSubmitStatus(null);
 
             router.push(`/orders/${newOrder._id}`);
         }
@@ -171,10 +136,10 @@ const Form = ({ autos, cities }: FormProps) => {
 
             {authorized ? (
                 <div className="mb-4 d-flex offset justify-content-start">
-                    <button type="submit" className="btn btn-primary" onClick={() => setSubmitButtonClicked('DRAFT')}>
+                    <button type="submit" className="btn btn-primary" onClick={() => setSubmitStatus('DRAFT')}>
                         Сохранить
                     </button>
-                    <button type="submit" className="btn btn-success" onClick={() => setSubmitButtonClicked('PROCESSING')}>
+                    <button type="submit" className="btn btn-success" onClick={() => setSubmitStatus('PROCESSING')}>
                         Отправить заявку
                     </button>
                 </div>
