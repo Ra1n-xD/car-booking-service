@@ -34,3 +34,22 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
         return NextResponse.json({ error: 'Error in response of DB' }, { status: 500 });
     }
 }
+
+export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+    const { id } = params;
+    const orderData = await request.json();
+
+    try {
+        await connect();
+
+        if (!orderData) {
+            return NextResponse.json({ error: 'Order not updated' }, { status: 400 });
+        }
+
+        const updatedOrder = await Order.findByIdAndUpdate(id, orderData, { new: true });
+
+        return NextResponse.json(updatedOrder, { status: 204 });
+    } catch (error) {
+        return NextResponse.json({ error: 'Error in response of DB' }, { status: 500 });
+    }
+}

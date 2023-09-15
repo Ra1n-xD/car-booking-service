@@ -2,9 +2,15 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+
+import useSWR from 'swr';
+import { getAutos, getCities } from '@/services/getData';
 
 import { useFormik } from 'formik';
 import { validationSchema, initialValues } from '@/utils/validationForm';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 import InputField from './InputField';
 import SelectCities from './SelectCities';
@@ -12,24 +18,10 @@ import CheckboxField from './CheckboxField';
 import SelectAutos from './SelectAutos';
 import Loading from './Loading';
 
-type Auto = {
-    _id: string;
-    brand: string;
-    models: object[];
-};
+const Form = ({ order, task, orderId }: any) => {
+    const { data: autos } = useSWR(`autos`, () => getAutos());
+    const { data: cities } = useSWR(`cities`, () => getCities());
 
-type City = {
-    _id: string;
-    code: string;
-    name: string;
-};
-
-interface FormProps {
-    autos: Auto[];
-    cities: City[];
-}
-
-const Form = ({ autos, cities }: FormProps) => {
     const router = useRouter();
 
     const session = useSession();
@@ -39,53 +31,75 @@ const Form = ({ autos, cities }: FormProps) => {
     console.log(session);
     // console.log(autos, cities);
 
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const handleCloseDeleteModal = () => setShowDeleteModal(false);
+    const handleShowDeleteModal = () => setShowDeleteModal(true);
+
     const [submitStatus, setSubmitStatus] = useState<null | string>(null);
 
     const formik = useFormik({
-        initialValues: initialValues,
+        initialValues: initialValues(order),
         validationSchema: validationSchema,
         onSubmit: async (values) => {
-            console.log(values);
-
             const orderData = {
-                status: { code: submitStatus },
+                status: { code: submitStatus || 'DRAFT' },
                 person: {
-                    lastName: formik.values.lastName,
-                    firstName: formik.values.firstName,
-                    middleName: formik.values.middleName,
-                    email: formik.values.email,
-                    driverLicense: formik.values.driverLicense
+                    lastName: values.lastName,
+                    firstName: values.firstName,
+                    secondName: values.secondName,
+                    email: values.email,
+                    driverLicense: values.driverLicense
                 },
                 auto: {
-                    brand: formik.values.carBrand,
+                    brand: values.carBrand,
                     model: {
-                        id: formik.values.carModelId,
-                        name: formik.values.carModel
+                        id: values.carModelId,
+                        name: values.carModel
                     }
                 },
                 city: {
-                    code: formik.values.cityCode,
-                    name: formik.values.cityName
+                    code: values.cityCode,
+                    name: values.cityName
                 },
                 userId: session.data?.user?.email,
                 createDate: new Date().toISOString()
             };
 
-            const addOrder = await fetch('/api/orders', {
-                method: 'POST',
-                body: JSON.stringify(orderData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            const newOrder = await addOrder.json();
+            console.log(orderData);
 
             setSubmitStatus(null);
 
-            router.push(`/orders/${newOrder._id}`);
+            if (submitStatus) {
+                const addOrder = await fetch('/api/orders', {
+                    method: 'POST',
+                    body: JSON.stringify(orderData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const newOrder = await addOrder.json();
+
+                router.push(`/orders/${newOrder._id}`);
+            } else {
+                const updateOrder = await fetch(`/api/orders/${orderId}`, {
+                    method: 'PATCH',
+                    body: JSON.stringify(orderData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const updatedOrder = await updateOrder.json();
+
+                router.push(`/orders/${orderId}`);
+            }
         }
     });
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     const handleDriverLicenseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let input = e.target.value.replace(/\D/g, '');
@@ -103,8 +117,59 @@ const Form = ({ autos, cities }: FormProps) => {
         formik.handleSubmit();
     };
 
-    if (isLoading) {
-        return <Loading />;
+    const handleDelete = async (id: string) => {
+        try {
+            await fetch(`/api/orders/${id}`, {
+                method: 'DELETE'
+            });
+            router.push('/orders');
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    let formButtons = null;
+    if (task === 'create') {
+        formButtons = (
+            <div className="mb-4 d-flex offset justify-content-start">
+                <button type="submit" className="btn btn-primary" onClick={() => setSubmitStatus('DRAFT')}>
+                    Сохранить
+                </button>
+                <button type="submit" className="btn btn-success" onClick={() => setSubmitStatus('PROCESSING')}>
+                    Отправить заявку
+                </button>
+            </div>
+        );
+    } else if (task === 'update') {
+        formButtons = (
+            <div className="mb-4 d-flex offset justify-content-start">
+                <Link href={`/orders/${orderId}`}>
+                    <button className="btn btn-primary">К заявке</button>
+                </Link>
+                <button type="submit" className="btn btn-success">
+                    Обновить данные
+                </button>
+                <button type="button" className="btn btn-danger" onClick={handleShowDeleteModal}>
+                    Удалить заявку
+                </button>
+
+                <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Удаление заявки</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Вы точно уверены, что хотите удалить заявку?</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                            Нет
+                        </Button>
+
+                        <Button variant="danger" onClick={() => handleDelete(orderId)}>
+                            Да, удалить заявку
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
+        );
     }
 
     return (
@@ -134,18 +199,7 @@ const Form = ({ autos, cities }: FormProps) => {
 
             <CheckboxField field={formik.getFieldProps('agreement')} form={formik} label="Согласие на обработку персональных данных" isEdited={!authorized} />
 
-            {authorized ? (
-                <div className="mb-4 d-flex offset justify-content-start">
-                    <button type="submit" className="btn btn-primary" onClick={() => setSubmitStatus('DRAFT')}>
-                        Сохранить
-                    </button>
-                    <button type="submit" className="btn btn-success" onClick={() => setSubmitStatus('PROCESSING')}>
-                        Отправить заявку
-                    </button>
-                </div>
-            ) : (
-                <div className="mb-4 text-danger text-center h6">Чтобы оставить заявку необходимо быть авторизованным</div>
-            )}
+            {authorized ? formButtons : <div className="mb-4 text-danger text-center h6">Чтобы оставить заявку необходимо быть авторизованным</div>}
         </form>
     );
 };
