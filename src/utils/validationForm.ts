@@ -9,7 +9,7 @@ const validationSchema = yup.object({
         .string()
         .required('Обязательное поле')
         .matches(/^[А-Яа-я]+$/, 'Только кириллица'),
-    middleName: yup.string().matches(/^[А-Яа-я]+$/, 'Только кириллица'),
+    secondName: yup.string().matches(/^[А-Яа-я]+$/, 'Только кириллица'),
     email: yup.string().email('Некорректный email').required('Обязательное поле'),
     driverLicense: yup
         .string()
@@ -21,18 +21,37 @@ const validationSchema = yup.object({
     agreement: yup.boolean().oneOf([true], 'Необходимо согласие на обработку данных').required('Необходимо согласие на обработку данных')
 });
 
-const initialValues = {
-    lastName: '',
-    firstName: '',
-    middleName: '',
-    email: '',
-    driverLicense: '',
-    cityCode: '',
-    cityName: '',
-    carBrand: '',
-    carModel: '',
-    carModelId: '',
-    agreement: false
-};
+function initialValues(order: any) {
+    console.log(order);
+    if (order) {
+        return {
+            lastName: order.person.lastName,
+            firstName: order.person.firstName,
+            secondName: order.person.secondName,
+            email: order.person.email,
+            driverLicense: order.person.driverLicense,
+            cityCode: order.city.code,
+            cityName: order.city.name,
+            carBrand: order.auto.brand,
+            carModel: order.auto.model.name,
+            carModelId: order.auto.model.id,
+            agreement: false
+        };
+    }
+
+    return {
+        lastName: '',
+        firstName: '',
+        secondName: '',
+        email: '',
+        driverLicense: '',
+        cityCode: '',
+        cityName: '',
+        carBrand: '',
+        carModel: '',
+        carModelId: '',
+        agreement: false
+    };
+}
 
 export { validationSchema, initialValues };

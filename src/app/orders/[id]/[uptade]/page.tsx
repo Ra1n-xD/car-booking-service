@@ -1,58 +1,24 @@
-'use client';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { format } from 'date-fns';
+import { getOrder } from '@/services/getData';
 
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import Loading from '@/components/Loading';
+import Form from '@/components/Form';
 
-const UpdateOrder = ({ params }: { params: { id: string } }) => {
-    const router = useRouter();
+const UpdateOrder = async ({ params }: { params: { id: string } }) => {
+    const order = await getOrder(params.id);
 
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    if (!order) return <Loading />;
 
-    const handleDelete = async (id: string) => {
-        try {
-            await fetch(`/api/orders/${id}`, {
-                method: 'DELETE'
-            });
-            router.push('/orders');
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    if (order.error) return <p className="mt-3 text-danger text-center">Ошикба загрузки данных, посетите сайт позже или перезагрузите страницу</p>;
 
     return (
-        <div>
-            <h1 className="h1 mt-4 text-center">нереальная обнова заявки #{params.id}</h1>
-            <h2 className="text-center">тут будет форма обновы</h2>
+        <div className="mt-5 d-flex flex-column align-items-center">
+            <h1 className="h2 mb-1 text-center">Редактирование заявки</h1>
+            <p className="mb-4 text-center">
+                {order.auto.brand} {order.auto.model.name} от {format(new Date(order.createDate), 'dd.MM.yyyy')}
+            </p>
 
-            <div className="mb-4 d-flex offset justify-content-center">
-                <Link href={`/orders/${params.id}`}>
-                    <button className="mt-4 btn btn-primary">К заявке</button>
-                </Link>
-
-                <Button variant="danger" onClick={handleShow} className="mt-4">
-                    Удалить заявку
-                </Button>
-
-                <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Удаление заявки</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>Вы точно уверены, что хотите удалить заявку?</Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Нет
-                        </Button>
-                        <Button variant="danger" onClick={() => handleDelete(params.id)}>
-                            Да, удалить заявку
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            </div>
+            <Form order={order} task={'update'} orderId={params.id} />
         </div>
     );
 };
