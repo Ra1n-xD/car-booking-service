@@ -1,4 +1,5 @@
 import { FieldProps, FormikErrors, FormikTouched } from 'formik';
+import Loading from '@/components/Loading';
 
 interface SelectAutosProps {
     fieldBrand: FieldProps['field'];
@@ -14,6 +15,8 @@ interface SelectAutosProps {
 }
 
 const SelectAutos: React.FC<SelectAutosProps> = ({ fieldBrand, fieldModel, fieldModelId, form, autos, isEdited }) => {
+    if (!autos) return <Loading />;
+
     const isErrorBrand = form.touched[fieldBrand.name] && form.errors[fieldBrand.name];
     const isErrorModel = form.touched[fieldModel.name] && form.errors[fieldModel.name];
 

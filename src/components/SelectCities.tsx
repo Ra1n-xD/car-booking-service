@@ -1,4 +1,5 @@
 import { FieldProps, FormikErrors, FormikTouched } from 'formik';
+import Loading from '@/components/Loading';
 
 interface SelectCitiesProps {
     fieldCode: FieldProps['field'];
@@ -12,6 +13,8 @@ interface SelectCitiesProps {
 }
 
 const SelectCities: React.FC<SelectCitiesProps> = ({ fieldCode, form, cities, isEdited }) => {
+    if (!cities) return <Loading />;
+
     const isError = form.touched[fieldCode.name] && form.errors[fieldCode.name];
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
