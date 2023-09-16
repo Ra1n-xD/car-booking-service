@@ -18,7 +18,7 @@ const UpdateOrder = async ({ params }: { params: { id: string } }) => {
                 {order.auto.brand} {order.auto.model.name} от {format(new Date(order.createDate), 'dd.MM.yyyy')}
             </p>
 
-            <Form order={order} task={'update'} orderId={params.id} />
+            <Form order={order} orderId={params.id} task={'update'} />
         </div>
     );
 };

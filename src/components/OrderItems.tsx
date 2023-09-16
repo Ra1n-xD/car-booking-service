@@ -42,7 +42,7 @@ const OrderItems = ({ userEmail }: { userEmail: string | unknown }) => {
     const { data: orders, isLoading, error } = useSWR(`orders`, () => getOrders(userEmail as string));
     console.log(orders);
 
-    if (isLoading) return <Loading />;
+    if (isLoading || !orders) return <Loading />;
 
     if (error) return <p className="mt-3 text-danger text-center">Ошикба загрузки данных, посетите сайт позже или перезагрузите страницу</p>;
 
@@ -50,22 +50,21 @@ const OrderItems = ({ userEmail }: { userEmail: string | unknown }) => {
 
     return (
         <div className="d-flex flex-column-reverse">
-            {orders &&
-                orders.map((order: Order, index: number) => {
-                    return (
-                        <div key={index} className="mt-4 offset d-flex flex-row">
-                            {getStatusLogo(order.status.code)}
-                            <div className="d-flex flex-column align-items-start">
-                                <Link href={`/orders/${order._id}`} className="order-item">
-                                    Заявка на {order.auto.brand} {order.auto.model.name} от {format(new Date(order.createDate), 'dd.MM.yyyy')}
-                                </Link>
+            {orders.map((order: Order, index: number) => {
+                return (
+                    <div key={index} className="mt-4 offset d-flex flex-row">
+                        {getStatusLogo(order.status.code)}
+                        <div className="d-flex flex-column align-items-start">
+                            <Link href={`/orders/${order._id}`} className="order-item">
+                                Заявка на {order.auto.brand} {order.auto.model.name} от {format(new Date(order.createDate), 'dd.MM.yyyy')}
+                            </Link>
 
-                                <div className="text-muted">Город: {order.city.name}</div>
-                                <div className="text-muted">Статус: {getStatusName(order.status.code)}</div>
-                            </div>
+                            <div className="text-muted">Город: {order.city.name}</div>
+                            <div className="text-muted">Статус: {getStatusName(order.status.code)}</div>
                         </div>
-                    );
-                })}
+                    </div>
+                );
+            })}
         </div>
     );
 };

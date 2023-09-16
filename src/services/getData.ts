@@ -32,7 +32,7 @@ export async function getOrders(userEmail: string | null | undefined) {
         headers.append('Content-Type', 'application/json');
         headers.append('userEmail', userEmail as string);
 
-        const orders = await fetch(`/api/orders`, { method: 'GET', headers: headers });
+        const orders = await fetch(`/api/orders`, { method: 'GET', headers: headers, cache: 'no-store' });
 
         if (!orders.ok) {
             console.error('Ошибка загрузки данных');
@@ -46,7 +46,7 @@ export async function getOrders(userEmail: string | null | undefined) {
 
 export async function getOrder(id: string) {
     try {
-        const order = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/${id}`);
+        const order = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/${id}`, { cache: 'no-store' });
 
         if (!order.ok) {
             console.error('Ошибка загрузки данных');

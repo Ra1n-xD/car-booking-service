@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, redirect } from 'next/navigation';
 import Link from 'next/link';
 
 import useSWR from 'swr';
@@ -35,14 +35,14 @@ const Form = ({ order, task, orderId }: any) => {
     const handleCloseDeleteModal = () => setShowDeleteModal(false);
     const handleShowDeleteModal = () => setShowDeleteModal(true);
 
-    const [submitStatus, setSubmitStatus] = useState<null | string>(null);
+    const [submitStatus, setSubmitStatus] = useState('DRAFT');
 
     const formik = useFormik({
         initialValues: initialValues(order),
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             const orderData = {
-                status: { code: submitStatus || 'DRAFT' },
+                status: { code: submitStatus },
                 person: {
                     lastName: values.lastName,
                     firstName: values.firstName,
@@ -67,9 +67,9 @@ const Form = ({ order, task, orderId }: any) => {
 
             console.log(orderData);
 
-            setSubmitStatus(null);
+            setSubmitStatus('DRAFT');
 
-            if (submitStatus) {
+            if (task === 'create') {
                 const addOrder = await fetch('/api/orders', {
                     method: 'POST',
                     body: JSON.stringify(orderData),
@@ -81,9 +81,9 @@ const Form = ({ order, task, orderId }: any) => {
                 const newOrder = await addOrder.json();
 
                 router.push(`/orders/${newOrder._id}`);
-            } else {
+            } else if (task === 'update') {
                 const updateOrder = await fetch(`/api/orders/${orderId}`, {
-                    method: 'PATCH',
+                    method: 'PUT',
                     body: JSON.stringify(orderData),
                     headers: {
                         'Content-Type': 'application/json'
@@ -91,7 +91,9 @@ const Form = ({ order, task, orderId }: any) => {
                 });
 
                 const updatedOrder = await updateOrder.json();
+                console.log(updatedOrder); // ну ошибка тут хули
 
+                router.refresh();
                 router.push(`/orders/${orderId}`);
             }
         }
@@ -176,7 +178,7 @@ const Form = ({ order, task, orderId }: any) => {
         <form onSubmit={handleSubmit} className="col-11 col-lg-8 col-xl-6">
             <InputField field={formik.getFieldProps('lastName')} form={formik} placeholder="Фамилия" isEdited={!authorized} />
             <InputField field={formik.getFieldProps('firstName')} form={formik} placeholder="Имя" isEdited={!authorized} />
-            <InputField field={formik.getFieldProps('middleName')} form={formik} placeholder="Отчество" isEdited={!authorized} isRequired={false} />
+            <InputField field={formik.getFieldProps('secondName')} form={formik} placeholder="Отчество" isEdited={!authorized} isRequired={false} />
             <InputField field={formik.getFieldProps('email')} form={formik} placeholder="Email" isEdited={!authorized} />
 
             <div className="row">

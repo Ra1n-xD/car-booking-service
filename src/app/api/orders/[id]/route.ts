@@ -4,9 +4,9 @@ import connect from '@/utils/db';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
-    const { id } = params;
-
     try {
+        const { id } = params;
+
         await connect();
 
         const order = await Order.findById(id);
@@ -22,9 +22,9 @@ export async function GET(request: Request, { params }: { params: { id: string }
 }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
-    const { id } = params;
-
     try {
+        const { id } = params;
+
         await connect();
 
         await Order.findByIdAndDelete(id);
@@ -35,11 +35,11 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     }
 }
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
-    const { id } = params;
-    const orderData = await request.json();
-
+export async function PUT(request: Request, { params }: { params: { id: string } }) {
     try {
+        const { id } = params;
+        const orderData = await request.json();
+
         await connect();
 
         if (!orderData) {
