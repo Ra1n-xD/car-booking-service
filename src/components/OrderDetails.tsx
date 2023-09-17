@@ -5,7 +5,7 @@ import { getStatusName } from '@/utils/statusFormat';
 const OrderDetails = ({ id, order, statusIcon }: any) => {
     return (
         <div className="mt-5 d-flex flex-column align-items-center">
-            <div className="mb-3 d-flex flex-row offset align-items-end">
+            <div className="mb-3 d-flex flex-row offset align-items-center">
                 {statusIcon}
                 <h1 className="h2">
                     Заявка на {order.auto.brand} {order.auto.model.name}
