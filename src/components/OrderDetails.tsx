@@ -23,12 +23,12 @@ const OrderDetails = ({ id, order, statusIcon }: any) => {
                 <p className="lead">Дата заявки: {format(new Date(order.createDate), 'dd.MM.yyyy')}</p>
             </div>
 
-            <div className="mb-2 d-flex offset justify-content-center">
-                <Link href="/orders" className="mt-4 btn btn-primary">
+            <div className="mt-4 d-flex offset justify-content-center flex-column flex-md-row w-75 ">
+                <Link href="/orders" className=" btn btn-primary">
                     К списку заявок
                 </Link>
 
-                <Link href={`/orders/${id}/update`} className="mt-4 btn btn-success">
+                <Link href={`/orders/${id}/update`} className="btn btn-success">
                     Редактировать заявку
                 </Link>
             </div>

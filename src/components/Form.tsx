@@ -133,7 +133,7 @@ const Form = ({ order, task, orderId }: any) => {
     let formButtons = null;
     if (task === 'create') {
         formButtons = (
-            <div className="mb-4 d-flex offset justify-content-start">
+            <div className="mb-4 d-flex offset flex-column flex-md-row w-100 justify-content-start">
                 <button type="submit" className="btn btn-primary" onClick={() => setSubmitStatus('DRAFT')}>
                     Сохранить
                 </button>
@@ -144,16 +144,18 @@ const Form = ({ order, task, orderId }: any) => {
         );
     } else if (task === 'update') {
         formButtons = (
-            <div className="mb-4 d-flex offset justify-content-start">
-                <Link href={`/orders/${orderId}`}>
-                    <button className="btn btn-primary">К заявке</button>
-                </Link>
-                <button type="submit" className="btn btn-success">
-                    Обновить данные
-                </button>
-                <button type="button" className="btn btn-danger" onClick={handleShowDeleteModal}>
-                    Удалить заявку
-                </button>
+            <div className="mb-4 d-flex justify-content-start">
+                <div className="d-flex flex-column flex-md-row w-100 offset">
+                    <Link className="btn btn-primary" href={`/orders/${orderId}`}>
+                        К заявке
+                    </Link>
+                    <button type="submit" className="btn btn-success">
+                        Обновить данные
+                    </button>
+                    <button type="button" className="btn btn-danger" onClick={handleShowDeleteModal}>
+                        Удалить заявку
+                    </button>
+                </div>
 
                 <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
                     <Modal.Header closeButton>
